@@ -11,30 +11,24 @@ public class AdminDataDAO {
         return new AdminDataDAO();
     }
 
-	 public AdminDataDTO IDPWCheck(String MailPara, String PassPara) throws SQLException{
+	 public AdminDataDTO IDPWCheck(String mail, String pass) throws SQLException{
 		 Connection con = null;
 		 PreparedStatement st = null;
 		 AdminDataDTO resultUd = new AdminDataDTO();
 
 		 try{
 	        con = DBManager.getConnection();
-        	st = con.prepareStatement("select * from user where mail=? and pass=? and deleteflag = false");
-        	st.setString(1, MailPara);
-        	st.setString(2, PassPara);
+        	st = con.prepareStatement("select * from Admins where admin_email=? and admin_password=? and admin_delete_flag = false");
+        	st.setString(1, mail);
+        	st.setString(2, pass);
         	ResultSet rs = st.executeQuery();
 
 	        if(rs.next()) {
-	            resultUd.setUserID(rs.getInt(1));
-	            resultUd.setUserName(rs.getString(2));
-	            resultUd.setMail(rs.getString(3));
-	            resultUd.setPass(rs.getString(4));
-	            resultUd.setDeleteFlag(rs.getBoolean(5));
-	            if(!(rs.getDate(6) == null)) {
-		            resultUd.setBirthday(rs.getDate(6));
-	            }
-	            if(!(rs.getTimestamp(7) == null)) {
-	            	resultUd.setLoginAt(rs.getTimestamp(7));
-	            }
+	            resultUd.setAdmin_id(rs.getInt(1));
+	            resultUd.setAdmin_name(rs.getString(2));
+	            resultUd.setAdmin_email(rs.getString(3));
+	            resultUd.setAdmin_password(rs.getString(4));
+	            resultUd.setAdmin_delete_flag(rs.getBoolean(5));
 	        }else {
 	        	return null;
 	        }

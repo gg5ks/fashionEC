@@ -11,7 +11,8 @@ public class DBManager {
 
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/fashionEC_db?useUnicode=true&characterEncoding=UTF8","root","");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/fashionEC_db","root","");
+            // ?useUnicode=true&characterEncoding=UTF8
             System.out.println("DBConnected!!");
             return con;
 

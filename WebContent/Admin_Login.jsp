@@ -12,7 +12,7 @@
 </head>
 <body>
 	<h1>ログイン</h1>
-	<form action="Login" method="post">
+	<form action="Admin_Product_Index" method="post">
 		<p>メールアドレス：</p>
 			<input type="text" name="mail">
 		<p>パスワード：</p>
