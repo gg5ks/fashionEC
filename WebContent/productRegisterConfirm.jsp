@@ -1,6 +1,6 @@
 <%@ page
         import="javax.servlet.http.HttpSession"
-		import="fashionEC.ProductDataBeans" %>
+		import="jums.ProductDataBeans" %>
 
 <%
 	HttpSession hs = request.getSession();

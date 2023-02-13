@@ -40,8 +40,13 @@ public class Admin_Product_Index extends HttpServlet {
 
 		try {
 			AdminDataDTO AdExist = AdminDataDAO.getInstance().IDPWCheck(mail,pass);
-			session.setAttribute("AdExist", AdExist);
-			request.getRequestDispatcher("/Admin_Product_Index.jsp").forward(request, response);
+			if(AdExist != null) {
+				session.setAttribute("AdExist", AdExist);
+				request.getRequestDispatcher("/Admin_Product_Index.jsp").forward(request, response);
+			}else {
+				request.setAttribute("error", "error");
+				request.getRequestDispatcher("/Admin_Login.jsp").forward(request, response);
+			}
 
 		}catch (Exception e) {
 			e.printStackTrace();
