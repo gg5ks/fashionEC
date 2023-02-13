@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class UserHelper {
 	//トップへのリンクを定数として設定
     private final String topURL = "User_TopPage.jsp";
-    private final String logoutURL = "Logout";
+    private final String logoutURL = "User_Logout";
     private final String myPageURL = "MyPage";
     private final String top = "Login";
 
