@@ -42,5 +42,4 @@ public class AdminDataDTO {
 		this.admin_delete_flag = admin_delete_flag;
 	}
 
-
 }
