@@ -1,6 +1,7 @@
 package jums;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,19 +30,27 @@ public class Admin_Product_Index extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
+
+		try {
+
+		//色を呼び出してbeansに保管する
+		ColorDataDTO color = new ColorDataDTO();
+		color.setColorName("");
+		ArrayList<ColorDataDTO> colorList = ColorDataDAO.getInstance().colorReceive(color);
+		session.setAttribute("colorList", colorList);
+
 
 		String mail = request.getParameter("mail");
 		String pass = request.getParameter("pass");
 		System.out.println(mail);
 		System.out.println(pass);
 
-		try {
-			AdminDataDTO AdExist = AdminDataDAO.getInstance().IDPWCheck(mail,pass);
-			session.setAttribute("AdExist", AdExist);
-			request.getRequestDispatcher("/Admin_Product_Index.jsp").forward(request, response);
+
+		AdminDataDTO AdExist = AdminDataDAO.getInstance().IDPWCheck(mail,pass);
+		session.setAttribute("AdExist", AdExist);
+		request.getRequestDispatcher("/Admin_Product_Index.jsp").forward(request, response);
 
 		}catch (Exception e) {
 			e.printStackTrace();
