@@ -1,8 +1,10 @@
 <%@ page
-        import="javax.servlet.http.HttpSession" %>
+        import="javax.servlet.http.HttpSession"
+		import="fashionEC.ProductDataBeans" %>
 
 <%
 	HttpSession hs = request.getSession();
+	ProductDataBeans pdb = (ProductDataBeans)hs.getAttribute("registerPro");
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -11,30 +13,30 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>商品登録</title>
+		<title>商品登録確認</title>
 	</head>
 	<body>
 
         <h1>商品登録</h1>
 
-		<form action = "Product_RegisterConfirm" method = POST>
+		<form action = "Product_RegisterComplete" method = POST>
 
 		<table border="1" style="border-collapse: collapse;text-align:center;">
 			<tr>
 				<td>商品シリーズ名</td>
-				<td><input type="text" name="masterName" style="width:100px;" value="" required></td>
+				<td><%= pdb.getMasterName()%></td>
 			</tr>
 			<tr>
 				<td>定価</td>
-				<td><input type="number" name="listPrice" style="width:100px;" value="" required>円</td>
+				<td><%= pdb.getListPrice()%>円</td>
 			</tr>
 			<tr>
 				<td>原価</td>
-				<td><input type="number" name="cost" style="width:100px;" value="" required>円</td>
+				<td><%= pdb.getCost()%>円</td>
 			</tr>
 			<tr>
 				<td>商品説明</td>
-				<td><textarea name = "productDescript" rows = "5" cols="30" required></textarea></td>
+				<td><%= pdb.getProductDescript()%></td>
 			</tr>
 		</table>
 		<br><br>
@@ -212,11 +214,11 @@
 		</table>
 
 
-		<input type="submit" value="確認画面へ">
+		<input type="submit" value="登録する">
 
         </form>
-        <form action="" method="POST">
-            <input type="submit" value="商品一覧へ">
+        <form action="Product_Register" method="POST">
+            <input type="submit" value="修正する">
         </form>
 
     </body>
