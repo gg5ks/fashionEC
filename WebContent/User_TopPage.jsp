@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<%@include file="User_Header.jsp" %>
 Hello!FashionEC!!
 <form action="User_Login">
 <input type="submit" value="ログイン">
