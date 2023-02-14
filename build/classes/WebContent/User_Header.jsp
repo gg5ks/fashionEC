@@ -16,7 +16,7 @@
 <body>
 <header>
 <a href="User_TopPage.jsp">ホーム</a>
-<form action="">
+<form action="https://docs.google.com/forms/d/e/1FAIpQLSfUAK7RZ-ci003xmyYiw4UUHjLTzDmrD0HFQke6StGAPrYcFw/viewform?usp=sf_link">
 <input type="submit" value="問い合わせ">
 </form>
 
