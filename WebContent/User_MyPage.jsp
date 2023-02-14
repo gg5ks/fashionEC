@@ -24,14 +24,8 @@
 <input type="submit" value="変更する">
 </form>
 
-<%if(request.getAttribute("quit") != null){ %>
 <form action="User_QuitService">
 <input type="submit" value="退会する">
 </form>
-<%}else{ %>
-<form action="User_QuitService">
-<input type="submit" value="退会する">
-</form>
-<%} %>
 </body>
 </html>

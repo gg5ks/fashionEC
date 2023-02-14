@@ -31,7 +31,8 @@ public class User_QuitService extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
-
+		UserDataDTO udd = (UserDataDTO) session.getAttribute("UserExist");
+		request.getRequestDispatcher("/User_QuitService.jsp").forward(request, response);
 	}
 
 	/**
