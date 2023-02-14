@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet Filter implementation class User_LoginCheck
  */
-@WebFilter("/User_LoginCheck")
+@WebFilter(urlPatterns={"/User_MyPage","/User_QuitService","/User_UpdateAcount"})
 public class User_LoginCheck implements Filter {
 
     /**
