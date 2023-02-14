@@ -50,4 +50,91 @@ public class UserDataDAO {
 	            }
 	        }
 	 }
+
+	 public void NewUser(UserDataDTO udd) throws SQLException{
+	        Connection con = null;
+	        PreparedStatement st = null;
+	        try{
+	            con = DBManager.getConnection();
+	            st =  con.prepareStatement("INSERT INTO Users(user_name,user_email,user_password,user_postid,user_address,user_tell) VALUES(?,?,?,?,?,?)");
+
+	            // ? => set
+	            st.setString(1, udd.getUser_name());
+	            st.setString(2, udd.getUser_email());
+	            st.setString(3, udd.getUser_password());
+	            st.setInt(4, udd.getUser_postid());
+	            st.setString(5, udd.getUser_address());
+	            st.setString(6, udd.getUser_tell());
+
+	            st.executeUpdate();
+
+	            System.out.println("insert completed");
+
+	        }catch(SQLException e){
+	            System.out.println(e.getMessage());
+	            throw new SQLException(e);
+	        }finally{
+	            if(con != null){
+	                con.close();
+	            }
+	        }
+	 }
+
+
+	 public void UpdateUser(UserDataDTO udd) throws SQLException{
+	        Connection con = null;
+	        PreparedStatement st = null;
+	        try{
+	            con = DBManager.getConnection();
+	            st =  con.prepareStatement("UPDATE Users SET user_name=?, user_email=?, user_password=?, user_postid=?, user_address=? ,user_tell=? WHERE user_id = ?");
+
+	            // ? => set
+	            st.setString(1, udd.getUser_name());
+	            st.setString(2, udd.getUser_email());
+	            st.setString(3, udd.getUser_password());
+	            st.setInt(4, udd.getUser_postid());
+	            st.setString(5, udd.getUser_address());
+	            st.setString(6, udd.getUser_tell());
+	            st.setInt(7, udd.getUser_id());
+
+	            st.executeUpdate();
+
+	            System.out.println("UPDATE completed");
+
+	        }catch(SQLException e){
+	            System.out.println(e.getMessage());
+	            throw new SQLException(e);
+	        }finally{
+	            if(con != null){
+	                con.close();
+	            }
+	        }
+
+ 	 }
+
+	 public void DeleteUser(UserDataDTO udd) throws SQLException{
+	        Connection con = null;
+	        PreparedStatement st = null;
+	        try{
+	            con = DBManager.getConnection();
+	            st =  con.prepareStatement("UPDATE Users SET user_delete_flag = ? WHERE user_id = ?");
+
+	            // ? => set
+	            st.setBoolean(1, true);
+	            st.setInt(2, udd.getUser_id());
+
+	            st.executeUpdate();
+
+	            System.out.println("UPDATE completed");
+
+	        }catch(SQLException e){
+	            System.out.println(e.getMessage());
+	            throw new SQLException(e);
+	        }finally{
+	            if(con != null){
+	                con.close();
+	            }
+	        }
+
+	}
 }

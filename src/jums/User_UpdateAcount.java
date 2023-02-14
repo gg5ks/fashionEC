@@ -1,0 +1,68 @@
+package jums;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+/**
+ * Servlet implementation class User_UpdateAcount
+ */
+@WebServlet("/User_UpdateAcount")
+public class User_UpdateAcount extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public User_UpdateAcount() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		request.setCharacterEncoding("UTF-8");
+		HttpSession session = request.getSession();
+
+		if(request.getParameter("UpD") != null) {
+			//DTOのアップデート
+			UserDataDTO udd = (UserDataDTO) session.getAttribute("UserExist");
+			udd.setUser_name(request.getParameter("name"));
+			udd.setUser_email(request.getParameter("mail"));
+			udd.setUser_password(request.getParameter("pass"));
+			udd.setUser_postid(Integer.parseInt(request.getParameter("post")));
+			udd.setUser_address(request.getParameter("address"));
+			udd.setUser_tell(request.getParameter("tell"));
+
+			//DAOの実行
+			try {
+				UserDataDAO.getInstance().UpdateUser(udd);
+				//mypage Go!!
+				request.getRequestDispatcher("/User_MyPage.jsp").forward(request, response);
+			}catch(Exception e){
+	        	e.printStackTrace();
+				request.setAttribute("error", e.toString());
+	            request.getRequestDispatcher("/error.jsp").forward(request, response);
+	        }
+		}else {
+		request.getRequestDispatcher("/User_UpdateAcount.jsp").forward(request, response);
+		}
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}

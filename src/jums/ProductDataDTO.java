@@ -6,15 +6,31 @@ import java.util.ArrayList;
 public class ProductDataDTO implements Serializable{
 
 	//商品
+	private int masterId;
+	private int adminId;
 	private int pColor;
 	private String size;
 	private int stock;
     private ArrayList<ProductDataDTO> productInfo = new ArrayList <ProductDataDTO>();
 
+	public void setMasterId(int masterId) {
+		this.masterId = masterId;
+	}
+	public int getMasterId() {
+		return masterId;
+	}
+
+	public int getAdminId() {
+		return adminId;
+	}
+	public void setAdminId(int adminId) {
+		this.adminId = adminId;
+	}
 
 	public void setPColor(int pColor) {
 		this.pColor = pColor;
 	}
+
 	public int getPColor() {
 		return pColor;
 	}

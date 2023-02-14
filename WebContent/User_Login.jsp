@@ -24,5 +24,9 @@
 		<br><br>
 		<input type="submit" value="ログイン">
 	</form>
+
+	<form action="User_NewAcount">
+		<input type="submit" value="新規会員登録はこちら！">
+	</form>
 </body>
 </html>
