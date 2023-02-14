@@ -24,8 +24,8 @@
 <input type="submit" value="カート">
 </form>
 
-<form action="">
-<input type="submit" value="マイページ">
+<form action="User_MyPage">
+	<input type="submit" value="マイページ">
 </form>
 </header>
 </body>
