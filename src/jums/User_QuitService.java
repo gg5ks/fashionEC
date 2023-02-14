@@ -7,18 +7,19 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class User_MyPage
+ * Servlet implementation class User_QuitService
  */
-@WebServlet("/User_MyPage")
-public class User_MyPage extends HttpServlet {
+@WebServlet("/User_QuitService")
+public class User_QuitService extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public User_MyPage() {
+    public User_QuitService() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,7 +30,8 @@ public class User_MyPage extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
-		request.getRequestDispatcher("/User_MyPage.jsp").forward(request, response);
+		HttpSession session = request.getSession();
+
 	}
 
 	/**

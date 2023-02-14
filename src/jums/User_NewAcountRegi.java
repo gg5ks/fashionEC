@@ -39,12 +39,12 @@ public class User_NewAcountRegi extends HttpServlet {
 			Integer post = Integer.parseInt(request.getParameter("post"));
 			String address = request.getParameter("address");
 			String tell = request.getParameter("tell");
-			
+
             //DTOオブジェクトにマッピング。DB専用のパラメータに変換
             UserDataDTO udd = new UserDataDTO();
             udd.setUser_name(name);
             udd.setUser_email(mail);
-            udd.setUser_password(mail);
+            udd.setUser_password(pass);
             udd.setUser_postid(post);
             udd.setUser_address(address);
             udd.setUser_tell(tell);
@@ -52,9 +52,9 @@ public class User_NewAcountRegi extends HttpServlet {
             //DBへデータの挿入
             UserDataDAO .getInstance().NewUser(udd);
 
-            //結果画面での表示用に入力パラメータ―をリクエストパラメータとして保持
-            //request.setAttribute("AcCompUDB", AcCompUDB);
-
+            //ログインさせる
+            UserDataDTO UserExist = UserDataDAO.getInstance().LoginCheck(mail,pass);
+            session.setAttribute("UserExist", UserExist);
             request.getRequestDispatcher("/User_TopPage.jsp").forward(request, response);
         }catch(Exception e){
             //何らかの理由で失敗したらエラーページにエラー文を渡して表示。想定は不正なアクセスとDBエラー
@@ -63,7 +63,7 @@ public class User_NewAcountRegi extends HttpServlet {
             request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
 }
-		
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

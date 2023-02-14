@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+<%
+	HttpSession hs = request.getSession();
+	boolean MyPageRoute = false;
+	if(session.getAttribute("UserExist") != null){
+		MyPageRoute = true;
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,9 +32,15 @@
 <input type="submit" value="カート">
 </form>
 
+<%if(MyPageRoute){ %>
 <form action="User_MyPage">
 	<input type="submit" value="マイページ">
 </form>
+<%}else{ %>
+<form action="User_Login">
+	<input type="submit" value="ログイン">
+</form>
+<%} %>
 </header>
 </body>
 </html>
