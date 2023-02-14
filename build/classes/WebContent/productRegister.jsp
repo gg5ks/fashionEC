@@ -106,7 +106,7 @@
 
 
 
-
+		<input type="hidden" name="ac"  value="<%= hs.getAttribute("ac")%>">
 		<input type="submit" value="確認画面へ">
 
         </form>

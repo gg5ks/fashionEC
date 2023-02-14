@@ -5,10 +5,18 @@ import java.io.Serializable;
 public class ProductMasterDTO implements Serializable{
 
 	//商品マスター
+	private int masterId;
 	private String masterName;
 	private int listPrice;
 	private int cost;
 	private String productDescript;
+
+	public void setMasterId(int masterId) {
+		this.masterId = masterId;
+	}
+	public int getMasterId() {
+		return masterId;
+	}
 
 	public void setMasterName(String masterName) {
 		this.masterName = masterName;

@@ -13,7 +13,7 @@ public class ProductDataDAO {
 	    }
 
 	    //商品登録用
-	    public void insertProduct(ArrayList<ProductDataDTO> pdd) throws SQLException{
+	    public void insertProduct(ArrayList<ProductDataDTO> pdd, int masterId) throws SQLException{
 	        Connection con = null;
 	        PreparedStatement st = null;
 
@@ -21,17 +21,26 @@ public class ProductDataDAO {
 	            con = DBManager.getConnection();
 
 	    		for (int i=0; i<pdd.size(); i++) {
-	    			String sql = "INSERT INTO Products(userID,itemCode,type,cartID) VALUES(?,?,?,?)";
+	    			String sql = "INSERT INTO Products(product_master_id,product_color_id,product_size,stock_quantity) VALUES(?,?,?,?)";
 	    			st =  con.prepareStatement(sql);
 
-		            st.setInt(1,userID);
-		            st.setString(2,udd.get(i).getItemCode());
-		            st.setInt(3,udd.get(i).getType());
-		            st.setInt(4, udd.get(i).getCartID());
+		            st.setInt(1,masterId);
+		            st.setInt(2,pdd.get(i).getPColor());
+		            st.setString(3,pdd.get(i).getSize());
+		            st.setInt(4, pdd.get(i).getStock());
 		            st.executeUpdate();
 	    		}
 	    		System.out.println("商品データを入力しました");
+	        }catch(SQLException e){
+	            System.out.println(e.getMessage());
+
+	            throw new SQLException(e);
+	        }finally{
+	            if(con != null){
+	                con.close();
+	            }
 	        }
+	     }
 
 
 }

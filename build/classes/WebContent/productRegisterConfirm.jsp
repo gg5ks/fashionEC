@@ -107,6 +107,7 @@
 		</table>
 		<% } %>
 
+		<input type="hidden" name="ac"  value="<%= hs.getAttribute("ac")%>">
 		<input type="submit" value="登録する">
 
         </form>

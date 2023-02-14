@@ -50,16 +50,15 @@ public class Product_RegisterComplete extends HttpServlet {
 	        pdbMaster.ProductMasterMapping(pmd);
 
 
-	        //DBへデータの挿入
-	        ProductMasterDAO .getInstance().insert(pmd);
+	        //DBへデータの挿入 //DBへ登録したmasteridを返してもらう
+	        ProductMasterDTO pmdResult = ProductMasterDAO .getInstance().insert(pmd);
 
-	        //DBへ登録したmasteridを返してもらう
-	        System.out.print("DBへ登録したmasteridを返してもらう");
+	        int masterId = pmdResult.getMasterId();
+	        System.out.print("DBへ登録したmasteridを返してもらった");
 
 	        //表に出す用
 	        request.setAttribute("registerPro", pdbMaster);
 
-	        //masteridも一緒に渡す
 	        ArrayList<ProductDataDTO> pddList1 = new ArrayList<ProductDataDTO>();
 	        for (int i=0; i<pdl1.size(); i++) {
 	        	ProductDataDTO pdd1 = new ProductDataDTO();
@@ -73,8 +72,9 @@ public class Product_RegisterComplete extends HttpServlet {
 	        	//配列を親配列に入れてネストにする
 	        	pddList1.add(pdd1);
 
-
-		        ProductDataDAO .getInstance().insertProduct(pddList1);
+		        //masteridも一緒に渡す
+		        ProductDataDAO .getInstance().insertProduct(pddList1,masterId);
+		        session.setAttribute("pdd1", pdd1);
 
 
 	        if(pdl2 !=null) {
@@ -84,9 +84,10 @@ public class Product_RegisterComplete extends HttpServlet {
 	        if(pdl3 !=null) {
 		        ProductDataDTO pdd3 = new ProductDataDTO();
 	        }
-            request.getRequestDispatcher("/productRegisterComplete.jsp").forward(request, response);
 
 	        }
+	        request.getRequestDispatcher("/productRegisterComplete.jsp").forward(request, response);
+
         }catch(Exception e){
             //何らかの理由で失敗したらエラーページにエラー文を渡して表示。想定は不正なアクセスとDBエラー
         	e.printStackTrace();
