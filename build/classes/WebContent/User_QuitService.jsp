@@ -10,7 +10,7 @@
 <h1>退会確認</h1>
 <p>本当に退会しますか？</p>
 <form action="User_QuitService">
-<input type="submit" value="退会する">
+<input type="submit" name="quit" value="退会する">
 </form>
 
 <form action="User_MyPage">

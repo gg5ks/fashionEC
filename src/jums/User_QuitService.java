@@ -1,6 +1,7 @@
 package jums;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,8 +32,20 @@ public class User_QuitService extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
-		UserDataDTO udd = (UserDataDTO) session.getAttribute("UserExist");
+		if(request.getParameter("quit") != null) {
+			UserDataDTO udd = (UserDataDTO) session.getAttribute("UserExist");
+			try {
+				UserDataDAO.getInstance().DeleteUser(udd);
+				session.invalidate();
+				request.getRequestDispatcher("/User_TopPage.jsp").forward(request, response);
+			} catch (SQLException e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+				request.getRequestDispatcher("/error.jsp").forward(request, response);
+			}
+		}else {
 		request.getRequestDispatcher("/User_QuitService.jsp").forward(request, response);
+		}
 	}
 
 	/**
