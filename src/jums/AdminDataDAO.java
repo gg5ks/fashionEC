@@ -11,16 +11,15 @@ public class AdminDataDAO {
         return new AdminDataDAO();
     }
 
-	 public AdminDataDTO IDPWCheck(String mail, String pass) throws SQLException{
+	 public AdminDataDTO IDPWCheck(String mail) throws SQLException{
 		 Connection con = null;
 		 PreparedStatement st = null;
 		 AdminDataDTO resultUd = new AdminDataDTO();
 
 		 try{
 	        con = DBManager.getConnection();
-        	st = con.prepareStatement("select * from Admins where admin_email=? and admin_password=? and admin_delete_flag = false");
+        	st = con.prepareStatement("select * from Admins where admin_email=?");
         	st.setString(1, mail);
-        	st.setString(2, pass);
         	ResultSet rs = st.executeQuery();
 
 	        if(rs.next()) {
@@ -32,7 +31,7 @@ public class AdminDataDAO {
 	        }else {
 	        	return null;
 	        }
-
+        	System.out.println("ユーザーを検索しました");
 	            return resultUd;
 
 	        }catch(SQLException e){

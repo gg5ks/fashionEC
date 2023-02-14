@@ -34,6 +34,12 @@ public class Product_RegisterComplete extends HttpServlet {
 		HttpSession session = request.getSession();
 
         try{
+            //アクセスルートチェック
+            String accesschk = request.getParameter("ac");
+            if(accesschk ==null ||session.getAttribute("ac")==null|| (Integer)session.getAttribute("ac")!=Integer.parseInt(accesschk)){
+                throw new Exception("不正なアクセスです");
+            }
+
 			ArrayList<ProductDataBeans> pdl1 = (ArrayList<ProductDataBeans>)session.getAttribute("productList1");
 			ArrayList<ProductDataBeans>  pdl2 = (ArrayList<ProductDataBeans>)session.getAttribute("productList2");
 			ArrayList<ProductDataBeans>  pdl3 = (ArrayList<ProductDataBeans>)session.getAttribute("productList3");

@@ -34,23 +34,74 @@ public class Admin_Product_Index extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		try {
-
-		//色を呼び出してbeansに保管する
-		ColorDataDTO color = new ColorDataDTO();
-		color.setColorName("");
-		ArrayList<ColorDataDTO> colorList = ColorDataDAO.getInstance().colorReceive(color);
-		session.setAttribute("colorList", colorList);
+	        session.setAttribute("ac", (int) (Math.random() * 1000));
 
 
-		String mail = request.getParameter("mail");
-		String pass = request.getParameter("pass");
-		System.out.println(mail);
-		System.out.println(pass);
+			//色を呼び出してbeansに保管する
+			ColorDataDTO color = new ColorDataDTO();
+			color.setColorName("");
+			ArrayList<ColorDataDTO> colorList = ColorDataDAO.getInstance().colorReceive(color);
+			session.setAttribute("colorList", colorList);
 
 
-		AdminDataDTO AdExist = AdminDataDAO.getInstance().IDPWCheck(mail,pass);
-		session.setAttribute("AdExist", AdExist);
-		request.getRequestDispatcher("/Admin_Product_Index.jsp").forward(request, response);
+			String mail = request.getParameter("mail");
+			System.out.println(mail);
+
+
+			AdminDataDTO AdExist = AdminDataDAO.getInstance().IDPWCheck(mail);
+           //セッションにログイン者の情報を保存する→ログイン情報を確認したいときに使う
+			session.setAttribute("AdExist", AdExist);
+
+            //DBからのパスワード結果と入力パスワードの判定素材を揃える
+            //DBからの返事
+            String passwordA = AdExist.getAdmin_password();
+            //フォームに入力されたもの
+			String passwordW = request.getParameter("pass");
+
+            String target ="";
+            String start = (String)request.getParameter("start");
+        	System.out.println(target);
+            System.out.println("startのparaは"+request.getParameter("start"));
+            //初期ページのどこからクリックされたか//あるいは別のページから
+            if(!start.equals("yes")) {
+            	target = (String) session.getAttribute("target");
+            }
+
+            //導線に応じた遷移先の指定
+            //EnabledがTrueの間はelse前まで処理される
+            //userIDのセッション保存はここで行う→login画面でのジャッジに使ってるため
+            if (passwordA !=null&&AdExist.isAdmin_delete_flag()){
+            	System.out.println("ユーザーIDはありました");
+            	//途中でログインするか、loginページに直リンクした時はindexに戻る
+            	if(passwordA.equals(passwordW)&&(start.equals("yes")||target==null)) {
+                    session.setAttribute("user", loginJudge.getUserID());
+            		request.getRequestDispatcher("/index.jsp").forward(request, response);
+            	}else if(passwordA.equals(passwordW)&&target.equals("update")) {
+                    session.setAttribute("user", loginJudge.getUserID());
+            		request.getRequestDispatcher("/ProfileUpdate").forward(request, response);
+                }else if(passwordA.equals(passwordW)&&target.equals("manage")) {
+                    session.setAttribute("user", loginJudge.getUserID());
+                	request.getRequestDispatcher("/RoomList").forward(request, response);
+               	//パスワードが一致しなかったら
+                }else{
+                	request.setAttribute("deny", "NO");
+                	request.setAttribute("userID",userID);
+                	request.getRequestDispatcher("/login.jsp").forward(request, response);
+                }
+            //DBからの返事が空っぽ且つEnalbedがtrue(=有効アカウントだったら)
+            //userIDが存在しないケースはenabledも存在しないので且つ条件なし
+            }else if(passwordA == null) {
+            	request.setAttribute("find", "NO");
+            	request.getRequestDispatcher("/login.jsp").forward(request, response);
+
+            //enabledがfalseだったら(退会済みのアカウント)
+            }else {
+            	request.setAttribute("quit", "YES");
+            	request.getRequestDispatcher("/login.jsp").forward(request, response);
+            }
+
+
+			request.getRequestDispatcher("/Admin_Product_Index.jsp").forward(request, response);
 
 		}catch (Exception e) {
 			e.printStackTrace();

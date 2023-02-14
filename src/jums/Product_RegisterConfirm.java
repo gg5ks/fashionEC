@@ -34,6 +34,12 @@ public class Product_RegisterConfirm extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");//リクエストパラメータの文字コードをUTF-8に変更
 
 		HttpSession session = request.getSession();
+        try{
+            //アクセスルートチェック
+            String accesschk = request.getParameter("ac");
+            if(accesschk ==null ||session.getAttribute("ac")==null|| (Integer)session.getAttribute("ac")!=Integer.parseInt(accesschk)){
+                throw new Exception("不正なアクセスです");
+            }
 
         //フォーム値からデータを取得
         ProductDataBeans pdb = new ProductDataBeans();
@@ -128,7 +134,12 @@ public class Product_RegisterConfirm extends HttpServlet {
 
         request.getRequestDispatcher("/productRegisterConfirm.jsp").forward(request, response);
 
-
+        }catch(Exception e){
+        	//何らかの理由で失敗したらエラーページにエラー文を渡して表示。想定は不正なアクセスとDBエラー
+        	e.printStackTrace();
+        	request.setAttribute("error", e.toString());
+        	request.getRequestDispatcher("/error.jsp").forward(request, response);
+        }
 	}
 
 	/**
