@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	HttpSession hs = request.getSession();
-	session.invalidate();
+	boolean error_flag = false;
+	if((String)request.getAttribute("error") != null){
+		error_flag = true;
+	}
 %>
 <!DOCTYPE html>
 <html>
@@ -11,6 +13,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<% if(error_flag){out.print("<p>ログインエラーが発生しました</p>");} %>
 	<h1>ログイン</h1>
 	<form action="Admin_Product_Index" method="post">
 		<p>メールアドレス：</p>
