@@ -112,8 +112,19 @@
 			</tr>
 			<% } %>
 		</table>
-
-
+		<br><br>
+		<table border="1" style="border-collapse: collapse;text-align:center;">
+			<tr>
+				<td>公開設定</td>
+				<td>
+				<div>
+					<input type="radio" name="publish" value=0 checked="checked" >非公開
+					<input type="radio" name="publish" value=1>公開
+				</div>
+				</td>
+			</tr>
+		</table>
+		<br><br>
 		<input type="hidden" name="ac"  value="<%= hs.getAttribute("ac")%>">
 		<input type="submit" value="確認画面へ">
 

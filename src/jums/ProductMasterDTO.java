@@ -10,6 +10,7 @@ public class ProductMasterDTO implements Serializable{
 	private int listPrice;
 	private int cost;
 	private String productDescript;
+	private int publish;
 
 	public void setMasterId(int masterId) {
 		this.masterId = masterId;
@@ -38,6 +39,19 @@ public class ProductMasterDTO implements Serializable{
 	public int getCost() {
 		return cost;
 	}
+	public void setPublish(int publish) {
+		this.publish = publish;
+	}
+	public boolean getPublish() {
+		boolean publishStatus = false;
+		if (publish == 1) {
+			publishStatus = true;
+			return publishStatus;
+		} else {
+		return publishStatus;
+		}
+	}
+
 
 	public void setProductDescript(String productDescript) {
 		this.productDescript = productDescript;

@@ -15,6 +15,7 @@ public class ProductDataBeans implements Serializable {
 	private int listPrice;
 	private int cost;
 	private String productDescript;
+	private int publish;
 
 	//商品
 	private int pColor;
@@ -51,6 +52,13 @@ public class ProductDataBeans implements Serializable {
 		return productDescript;
 	}
 
+	public void setPublish(int publish) {
+		this.publish = publish;
+	}
+	public int getPublish() {
+		return publish;
+	}
+
 	public void setPColor(int pColor) {
 		this.pColor = pColor;
 	}
@@ -85,6 +93,7 @@ public class ProductDataBeans implements Serializable {
     	pmd.setListPrice(this.listPrice);
     	pmd.setCost(this.cost);
     	pmd.setProductDescript(this.productDescript);
+    	pmd.setPublish(this.publish);
     }
 
     public void ProductMapping(ProductDataDTO pdd){

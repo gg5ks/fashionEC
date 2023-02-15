@@ -106,6 +106,7 @@
 			</tr>
 		</table>
 		<% } %>
+		<br><br>
 
 		<table border="1" style="border-collapse: collapse;text-align:center;">
 			<tr>
@@ -118,8 +119,21 @@
 					</div>
 				</td>
 			</tr>
-
 		</table>
+		<br><br>
+
+		<table border="1" style="border-collapse: collapse;text-align:center;">
+			<tr>
+				<td>公開設定</td>
+				<td><% if (pdb.getPublish()==1) {
+					out.print("公開");
+				}else {
+					out.print("非公開");
+				}%>
+				</td>
+			</tr>
+		</table>
+
 		<input type="hidden" name="ac"  value="<%= hs.getAttribute("ac")%>">
 		<input type="submit" value="登録する">
 

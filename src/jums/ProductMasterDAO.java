@@ -22,12 +22,13 @@ public class ProductMasterDAO {
         try{
             con = DBManager.getConnection();
             st =  con.prepareStatement
-            		("INSERT INTO ProductMasters(product_master_name,product_price,product_cost,product_description,product_image1) VALUES(?,?,?,?,?)");
+            		("INSERT INTO ProductMasters(product_master_name,product_price,product_cost,product_description,product_image1,product_exibition_status) VALUES(?,?,?,?,?,?)");
             st.setString(1, pmd.getMasterName());
             st.setInt(2, pmd.getListPrice());
             st.setInt(3, pmd.getCost());
             st.setString(4, pmd.getProductDescript());
             st.setString(5, imgList.get(0));
+            st.setBoolean(6, pmd.getPublish());
 
             st.executeUpdate();
 

@@ -53,6 +53,8 @@ public class Product_RegisterConfirm extends HttpServlet {
         pdb.setListPrice(Integer.parseInt(request.getParameter("listPrice")));
         pdb.setCost(Integer.parseInt(request.getParameter("cost")));
         pdb.setProductDescript(request.getParameter("productDescript"));
+        pdb.setPublish(Integer.parseInt(request.getParameter("publish")));
+
 
         //1つめの色型を配列にセットする
         int color1 = Integer.parseInt(request.getParameter("productColor1"));
@@ -156,8 +158,10 @@ public class Product_RegisterConfirm extends HttpServlet {
 			imgList.add(filename);
 
         }
+        //画像は画像単体でsession管理するよ
+		session.setAttribute("imgList", imgList);
 
-			session.setAttribute("imgList", imgList);
+
 
         //商品マスターのフォーム値が入ったbeansをセッションに格納
         session.setAttribute("registerPro",pdb);
