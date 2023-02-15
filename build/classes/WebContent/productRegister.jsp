@@ -21,7 +21,7 @@
 
         <h1>商品登録</h1>
 
-		<form action = "Product_RegisterConfirm" method = "POST">
+		<form action = "Product_RegisterConfirm" method = "POST" enctype="multipart/form-data">
 
 		<table border="1" style="border-collapse: collapse;text-align:center;">
 			<tr>
@@ -104,6 +104,12 @@
 		<br><br>
 <% } %>
 
+		<table border="1" style="border-collapse: collapse;text-align:center;">
+			<tr>
+				<td>画像1</td>
+				<td><input type="file" name="img1"><br></td>
+			</tr>
+		</table>
 
 
 		<input type="hidden" name="ac"  value="<%= hs.getAttribute("ac")%>">

@@ -1,1 +1,3 @@
 /.github/CODEOWNERS
+build/classes/.github/CODEOWNERS
+WebContent/WEB-INF/lib/mysql-connector-j-8.0.31.jar

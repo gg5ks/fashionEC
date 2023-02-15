@@ -9,7 +9,8 @@
 	ArrayList<ProductDataBeans> pbdList1 = (ArrayList<ProductDataBeans>)hs.getAttribute("productList1");
 	ArrayList<ProductDataBeans> pbdList2 = (ArrayList<ProductDataBeans>)hs.getAttribute("productList2");
 	ArrayList<ProductDataBeans> pbdList3 = (ArrayList<ProductDataBeans>)hs.getAttribute("productList3");
-
+	String filename1 =(String)request.getAttribute("filename1");
+	System.out.println(filename1);
 	System.out.println(pbdList1.get(0).getSize());
 
 %>
@@ -107,6 +108,13 @@
 		</table>
 		<% } %>
 
+		<table border="1" style="border-collapse: collapse;text-align:center;">
+			<tr>
+				<td>画像1</td>
+				<td><img src="img/<%=filename1 %>"><br></td>
+			</tr>
+
+		</table>
 		<input type="hidden" name="ac"  value="<%= hs.getAttribute("ac")%>">
 		<input type="submit" value="登録する">
 

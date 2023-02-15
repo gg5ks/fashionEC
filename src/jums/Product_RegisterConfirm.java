@@ -1,19 +1,24 @@
 package jums;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 /**
  * Servlet implementation class Product_RegisterConfirm
  */
 @WebServlet("/Product_RegisterConfirm")
+@MultipartConfig
 public class Product_RegisterConfirm extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -126,7 +131,20 @@ public class Product_RegisterConfirm extends HttpServlet {
             session.setAttribute("productList3", pdbList3);
         }
 
-
+        //画像のはなし
+		//name属性がimg1のファイルをPartオブジェクトとして取得
+		Part part=request.getPart("img1");
+		System.out.println(part);
+		//ファイル名を取得
+		//String filename=part.getSubmittedFileName();//ie対応が不要な場合
+		String filename1 =Paths.get(part.getSubmittedFileName()).getFileName().toString();		//アップロードするフォルダ
+		System.out.println(filename1);
+		String path=getServletContext().getRealPath("/img");
+		//実際にファイルが保存されるパス確認
+		System.out.println(path);
+		//書き込み
+		part.write(path+File.separator+filename1);
+		request.setAttribute("filename1", filename1);
 
         //商品マスターのフォーム値が入ったbeansをセッションに格納
         session.setAttribute("registerPro",pdb);
@@ -148,7 +166,6 @@ public class Product_RegisterConfirm extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
-		System.out.println("サーブレット");
 	}
 
 }
