@@ -72,10 +72,10 @@ public class Product_RegisterComplete extends HttpServlet {
 
 	        	//配列を親配列に入れてネストにする
 	        	pddList1.add(pdd1);
-
+	        }
 		        //masteridも一緒に渡す
 		        ProductDataDAO .getInstance().insertProduct(pddList1,masterId);
-		        session.setAttribute("pdd1", pdd1);
+		        session.setAttribute("pddList1", pddList1);
 
 
 	        if(pdl2 !=null) {
@@ -86,7 +86,6 @@ public class Product_RegisterComplete extends HttpServlet {
 		        ProductDataDTO pdd3 = new ProductDataDTO();
 	        }
 
-	        }
 	        request.getRequestDispatcher("/productRegisterComplete.jsp").forward(request, response);
 
         }catch(Exception e){
