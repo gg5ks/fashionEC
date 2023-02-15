@@ -92,4 +92,5 @@ public class ProductDataBeans implements Serializable {
     	pdd.setSize(this.size);
     	pdd.setStock(this.stock);
     }
+
 }

@@ -93,7 +93,7 @@
 						<input type="checkbox" name=checkbox<%=i%> value="FXL">
 						FXL
 						<input type="number" name="FXL<%=i%>stock" size=5>
-						<input type="checkbox" name=checkbox<%=i%> value="XML">
+						<input type="checkbox" name=checkbox<%=i%> value="MXL">
 						MXL
 						<input type="number" name="MXL<%=i%>stock" size=5>
 						<br>
@@ -105,10 +105,12 @@
 <% } %>
 
 		<table border="1" style="border-collapse: collapse;text-align:center;">
+			<% for(int i=1; i<=5; i++){ %>
 			<tr>
-				<td>画像1</td>
-				<td><input type="file" name="img1"><br></td>
+				<td>画像<%=i%></td>
+				<td><input type="file" name="img<%=i%>"><br></td>
 			</tr>
+			<% } %>
 		</table>
 
 

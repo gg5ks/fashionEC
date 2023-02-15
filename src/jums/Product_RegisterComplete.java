@@ -49,9 +49,10 @@ public class Product_RegisterComplete extends HttpServlet {
 	        ProductMasterDTO pmd = new ProductMasterDTO();
 	        pdbMaster.ProductMasterMapping(pmd);
 
+	        ArrayList<String> imgLists = (ArrayList<String>) session.getAttribute("imgList");
 
 	        //DBへデータの挿入 //DBへ登録したmasteridを返してもらう
-	        ProductMasterDTO pmdResult = ProductMasterDAO .getInstance().insert(pmd);
+	        ProductMasterDTO pmdResult = ProductMasterDAO .getInstance().insert(pmd,imgLists);
 
 	        int masterId = pmdResult.getMasterId();
 	        System.out.print("DBへ登録したmasteridを返してもらった");

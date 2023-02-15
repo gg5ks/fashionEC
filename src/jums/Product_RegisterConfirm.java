@@ -133,18 +133,31 @@ public class Product_RegisterConfirm extends HttpServlet {
 
         //画像のはなし
 		//name属性がimg1のファイルをPartオブジェクトとして取得
-		Part part=request.getPart("img1");
-		System.out.println(part);
-		//ファイル名を取得
-		//String filename=part.getSubmittedFileName();//ie対応が不要な場合
-		String filename1 =Paths.get(part.getSubmittedFileName()).getFileName().toString();		//アップロードするフォルダ
-		System.out.println(filename1);
-		String path=getServletContext().getRealPath("/img");
-		//実際にファイルが保存されるパス確認
-		System.out.println(path);
-		//書き込み
-		part.write(path+File.separator+filename1);
-		request.setAttribute("filename1", filename1);
+        ArrayList<String> imgList = new ArrayList<String>();
+        for(int i=1; i<=5; i++) {
+        	String img = "img"+i;
+        	Part part=request.getPart(img);
+
+        	if(part.getSize() ==0) {
+        		break;
+        	}
+
+			System.out.println(part);
+			//ファイル名を取得
+			//String filename=part.getSubmittedFileName();//ie対応が不要な場合
+			String filename =Paths.get(part.getSubmittedFileName()).getFileName().toString();		//アップロードするフォルダ
+			System.out.println(filename);
+			String path=getServletContext().getRealPath("/img");
+			//実際にファイルが保存されるパス確認
+			System.out.println(path);
+			//書き込み
+			part.write(path+File.separator+filename);
+
+			imgList.add(filename);
+
+        }
+
+			session.setAttribute("imgList", imgList);
 
         //商品マスターのフォーム値が入ったbeansをセッションに格納
         session.setAttribute("registerPro",pdb);
