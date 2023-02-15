@@ -102,7 +102,7 @@
 			</tr>
 		</table>
 		<br><br>
-<% } %>
+		<% } %>
 
 		<table border="1" style="border-collapse: collapse;text-align:center;">
 			<% for(int i=1; i<=5; i++){ %>

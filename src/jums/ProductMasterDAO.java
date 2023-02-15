@@ -16,20 +16,20 @@ public class ProductMasterDAO {
     }
 
     //マスターの登録と登録idの返却
-    public ProductMasterDTO insert(ProductMasterDTO pmd, ArrayList<String> imgList) throws SQLException{
+    public ProductMasterDTO insert(ProductMasterDTO pmd, ArrayList<String> imgList, int adminId) throws SQLException{
         Connection con = null;
         PreparedStatement st = null;
         try{
             con = DBManager.getConnection();
             st =  con.prepareStatement
-            		("INSERT INTO ProductMasters(product_master_name,product_price,product_cost,product_description,product_image1,product_exibition_status) VALUES(?,?,?,?,?,?)");
+            		("INSERT INTO ProductMasters(product_master_name,product_price,product_cost,product_description,product_image1,product_exibition_status,admin_id) VALUES(?,?,?,?,?,?,?)");
             st.setString(1, pmd.getMasterName());
             st.setInt(2, pmd.getListPrice());
             st.setInt(3, pmd.getCost());
             st.setString(4, pmd.getProductDescript());
             st.setString(5, imgList.get(0));
             st.setBoolean(6, pmd.getPublish());
-
+            st.setInt(7, adminId);
             st.executeUpdate();
 
 
@@ -76,8 +76,9 @@ public class ProductMasterDAO {
             	st =  con.prepareStatement(sql4img);
 
             	for (int i=1; i<imgList.size(); i++) {
-                st.setString(i, imgList.get(i));
+            		st.setString(i, imgList.get(i));
             	}
+
             	System.out.println(st);
                 st.executeUpdate();
                 System.out.println("imgいれた");

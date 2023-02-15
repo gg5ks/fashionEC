@@ -51,6 +51,7 @@ public class Admin_Product_Index extends HttpServlet {
 			AdminDataDTO AdExist = AdminDataDAO.getInstance().IDPWCheck(mail);
            //セッションにログイン者の情報を保存する→ログイン情報を確認したいときに使う
 			session.setAttribute("AdExist", AdExist);
+			System.out.println(AdExist.getAdmin_id());
 
             //DBからのパスワード結果と入力パスワードの判定素材を揃える
             //DBからの返事

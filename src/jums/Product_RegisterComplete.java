@@ -48,11 +48,14 @@ public class Product_RegisterComplete extends HttpServlet {
 	        //DTOオブジェクトにマッピング。DB専用のパラメータに変換
 	        ProductMasterDTO pmd = new ProductMasterDTO();
 	        pdbMaster.ProductMasterMapping(pmd);
+	        AdminDataDTO loginAdmin = (AdminDataDTO)session.getAttribute("AdExist");
+	        int adminId = loginAdmin.getAdmin_id();
+	        System.out.println(adminId);
 
 	        ArrayList<String> imgLists = (ArrayList<String>) session.getAttribute("imgList");
 
 	        //DBへデータの挿入 //DBへ登録したmasteridを返してもらう
-	        ProductMasterDTO pmdResult = ProductMasterDAO .getInstance().insert(pmd,imgLists);
+	        ProductMasterDTO pmdResult = ProductMasterDAO .getInstance().insert(pmd,imgLists,adminId);
 
 	        int masterId = pmdResult.getMasterId();
 	        System.out.print("DBへ登録したmasteridを返してもらった");
@@ -68,22 +71,46 @@ public class Product_RegisterComplete extends HttpServlet {
 	        	pdd1.setSize(pdl1.get(i).getSize());
 	        	pdd1.setStock(pdl1.get(i).getStock());
 
-	        	System.out.println(pdl1.get(i).getSize());
-
 	        	//配列を親配列に入れてネストにする
 	        	pddList1.add(pdd1);
 	        }
 		        //masteridも一緒に渡す
-		        ProductDataDAO .getInstance().insertProduct(pddList1,masterId);
+		        ProductDataDAO .getInstance().insertProduct(pddList1,masterId,adminId);
 		        session.setAttribute("pddList1", pddList1);
 
 
 	        if(pdl2 !=null) {
-		        ProductDataDTO pdd2 = new ProductDataDTO();
+		        ArrayList<ProductDataDTO> pddList2 = new ArrayList<ProductDataDTO>();
+		        for (int i=0; i<pdl2.size(); i++) {
+		        	ProductDataDTO pdd2 = new ProductDataDTO();
+		        	//色、サイズ、在庫セットで配列に入れる
+		        	pdd2.setPColor(pdl2.get(i).getPColor());
+		        	pdd2.setSize(pdl2.get(i).getSize());
+		        	pdd2.setStock(pdl2.get(i).getStock());
+
+		        	//配列を親配列に入れてネストにする
+		        	pddList2.add(pdd2);
+		        }
+		        //masteridも一緒に渡す
+		        ProductDataDAO .getInstance().insertProduct(pddList2,masterId,adminId);
+		        session.setAttribute("pddList2", pddList2);
 	        }
 
 	        if(pdl3 !=null) {
-		        ProductDataDTO pdd3 = new ProductDataDTO();
+		        ArrayList<ProductDataDTO> pddList3 = new ArrayList<ProductDataDTO>();
+		        for (int i=0; i<pdl3.size(); i++) {
+		        	ProductDataDTO pdd3 = new ProductDataDTO();
+		        	//色、サイズ、在庫セットで配列に入れる
+		        	pdd3.setPColor(pdl3.get(i).getPColor());
+		        	pdd3.setSize(pdl3.get(i).getSize());
+		        	pdd3.setStock(pdl3.get(i).getStock());
+
+		        	//配列を親配列に入れてネストにする
+		        	pddList3.add(pdd3);
+		        }
+		        //masteridも一緒に渡す
+		        ProductDataDAO .getInstance().insertProduct(pddList3,masterId,adminId);
+		        session.setAttribute("pddList3", pddList3);
 	        }
 
 	        request.getRequestDispatcher("/productRegisterComplete.jsp").forward(request, response);
