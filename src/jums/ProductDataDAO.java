@@ -2,6 +2,7 @@ package jums;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -42,6 +43,43 @@ public class ProductDataDAO {
 	            }
 	        }
 	     }
+        //商品詳細表示用
+        public ArrayList<ProductDataDTO> proDetailInfo(int masterId) throws SQLException{
+            Connection con = null;
+            PreparedStatement st = null;
 
+            try{
+            	con = DBManager.getConnection();
+            	st =  con.prepareStatement ("SELECT * FROM Products WHERE product_master_id = ?");
+
+            	st.setInt(1, masterId);
+                ResultSet rs = st.executeQuery();
+
+                ArrayList<ProductDataDTO> resultList = new ArrayList<ProductDataDTO>();
+
+                while(rs.next()) {
+                	ProductDataDTO resultPd = new ProductDataDTO();
+
+
+	           	 //resultPd(javabeans)(のアレイリスト)に結果をセットしていく
+	           	 resultPd.setPColor(rs.getInt("product_color_id"));
+	           	 resultPd.setSize(rs.getString("product_size"));
+	           	 resultPd.setStock(rs.getInt("stock_quantity"));
+
+	           	 resultList.add(resultPd);
+                }
+                System.out.println("詳細用見つけた4product");
+                return resultList;
+
+            }catch(SQLException e){
+                System.out.println(e.getMessage());
+                throw new SQLException(e);
+            }finally{
+                if(con != null){
+                    con.close();
+                }
+            }
+
+    }
 
 }

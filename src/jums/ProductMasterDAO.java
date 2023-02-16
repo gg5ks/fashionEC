@@ -239,7 +239,55 @@ public class ProductMasterDAO {
             }
 
     }
-        
+        //商品詳細表示用
+        public ProductMasterDTO searchProDetail(int masterId) throws SQLException{
+            Connection con = null;
+            PreparedStatement st = null;
+
+            try{
+            	con = DBManager.getConnection();
+            	st =  con.prepareStatement ("SELECT * FROM ProductMasters WHERE product_master_id = ?");
+
+            	st.setInt(1, masterId);
+                ResultSet rs = st.executeQuery();
+
+                ProductMasterDTO resultPd = new ProductMasterDTO();
+
+                rs.next();
+
+				 //resultPd(javabeans)(のアレイリスト)に結果をセットしていく
+				 resultPd.setMasterId(rs.getInt("product_master_id"));
+				 resultPd.setMasterName(rs.getString("product_master_name"));
+				 resultPd.setListPrice(rs.getInt("product_price"));
+				 resultPd.setCost(rs.getInt("product_cost"));
+				 resultPd.setProductDescript(rs.getString("product_description"));
+
+				 Boolean p = rs.getBoolean("product_exibition_status");
+				 if (p) {
+					resultPd.setPublish(1);
+				 }else {
+					resultPd.setPublish(0);
+				 }
+				 resultPd.setImg1(rs.getString("product_image1"));
+				 resultPd.setImg2(rs.getString("product_image2"));
+				 resultPd.setImg3(rs.getString("product_image3"));
+				 resultPd.setImg4(rs.getString("product_image4"));
+				 resultPd.setImg5(rs.getString("product_image5"));
+
+                System.out.println("詳細用見つけた");
+                return resultPd;
+
+            }catch(SQLException e){
+                System.out.println(e.getMessage());
+                throw new SQLException(e);
+            }finally{
+                if(con != null){
+                    con.close();
+                }
+            }
+
+    }
+
         public ArrayList<ProductMasterDTO> UserIndexProduct(ProductMasterDTO pmd,ProductDataDTO pdd) throws SQLException{
             Connection con = null;
             PreparedStatement st = null;
