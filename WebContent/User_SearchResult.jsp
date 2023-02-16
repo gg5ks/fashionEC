@@ -15,8 +15,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div>
+
+
 	<% for(UserProductListBeans uplb:PdList){ %>
+	<div style="border: solid 1px black;">
+		<form action="User_ProductDetail?id=<%=uplb.getMasterId() %>" method="get"><input type="submit"></form>
 		<p><%=uplb.getMasterName() %></p>
 
 		<p><%=uplb.getListPrice() %></p>
@@ -38,8 +41,8 @@
 			<%=s %>
 		<%} %>
 		</p>
-
-	<%} %>
 	</div>
+	<%} %>
+
 </body>
 </html>
