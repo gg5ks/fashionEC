@@ -13,11 +13,13 @@ public class ProductMasterDTO implements Serializable{
 	private String productDescript;
 	private int publish;
 	private ArrayList<Integer> masters;
+
     private String img1;
     private String img2;
     private String img3;
     private String img4;
     private String img5;
+
 
 	//商品
 	private int pColor;
@@ -134,4 +136,5 @@ public class ProductMasterDTO implements Serializable{
 		this.size = size;
 		this.stock = stock;
     }
+
 }

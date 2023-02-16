@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet implementation class Product_Detail
  */
-@WebServlet("/Product_Detail")
+@WebServlet("/ProductDetail")
 public class ProductDetail extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -41,7 +41,7 @@ public class ProductDetail extends HttpServlet {
                 throw new Exception("不正なアクセスです");
             }
 
-            int masterId = Integer.parseInt(request.getParameter("mID"));
+            int masterId = Integer.parseInt(request.getParameter("mId"));
             ProductMasterDTO resultMaster = ProductMasterDAO.getInstance().searchProDetail(masterId);
             ArrayList<ProductDataDTO> resultProducts = ProductDataDAO.getInstance().proDetailInfo(masterId);
             session.setAttribute("resultMaster", resultMaster);
@@ -89,7 +89,7 @@ public class ProductDetail extends HttpServlet {
 
                 if(singleColors.size()==3) {
                     for(int h=0; h<resultProducts.size(); h++) {
-                    	if(resultProducts.get(h).getPColor()== singleColors.get(1)) {
+                    	if(resultProducts.get(h).getPColor()== singleColors.get(2)) {
                     		String size = resultProducts.get(h).getSize();
                     		sizes3.add(size);
 

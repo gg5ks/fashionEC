@@ -10,13 +10,12 @@
 	ArrayList<ColorDataDTO> cdd = (ArrayList<ColorDataDTO>)hs.getAttribute("colorList");
 	ArrayList<Integer> colorIds = (ArrayList<Integer>)hs.getAttribute("colorNum");
 	ArrayList<Integer> colors = (ArrayList<Integer>)hs.getAttribute("singleColors");
-
-	ArrayList<Integer> sizes1 = (ArrayList<Integer>)hs.getAttribute("sizes1");
-	ArrayList<Integer> sizes2 = (ArrayList<Integer>)hs.getAttribute("sizes2");
-	ArrayList<Integer> sizes3 = (ArrayList<Integer>)hs.getAttribute("sizes3");
-	ArrayList<String> stocks1 = (ArrayList<String>)hs.getAttribute("stocks1");
-	ArrayList<String> stocks2 = (ArrayList<String>)hs.getAttribute("stocks2");
-	ArrayList<String> stocks3 = (ArrayList<String>)hs.getAttribute("stocks3");
+	ArrayList<String> sizes1 = (ArrayList<String>)hs.getAttribute("sizes1");
+	ArrayList<String> sizes2 = (ArrayList<String>)hs.getAttribute("sizes2");
+	ArrayList<String> sizes3 = (ArrayList<String>)hs.getAttribute("sizes3");
+	ArrayList<Integer> stocks1 = (ArrayList<Integer>)hs.getAttribute("stocks1");
+	ArrayList<Integer> stocks2 = (ArrayList<Integer>)hs.getAttribute("stocks2");
+	ArrayList<Integer> stocks3 = (ArrayList<Integer>)hs.getAttribute("stocks3");
 %>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -39,11 +38,15 @@
 			<div><a href="Admin_Login?Logout=yes">ログアウト</a></div>
         </div>
     </div>
-    <div class="split-item split-right"style="display:table-cell;position: relative; background-color:blue;width: 70%;">
+    <div class="split-item split-right"style="display:table-cell;position: relative; width: 70%;">
         <div class="split-right__inner">
 
             <h1>商品詳細</h1>
 		<table border="1" style="border-collapse: collapse;text-align:center;">
+			<tr>
+				<td>商品シリーズID</td>
+				<td><%= pmd.getMasterId()%></td>
+			</tr>
 			<tr>
 				<td>商品シリーズ名</td>
 				<td><%= pmd.getMasterName()%></td>
@@ -67,7 +70,9 @@
 			<tr>
 				<td>色1</td>
 				<td><% int colorPrint1 = colors.get(0);
+				System.out.println(colorPrint1);
 								int colorIndex1 = colorIds.indexOf(colorPrint1);
+								System.out.println(colorIndex1);
 								int colorCate1 = cdd.get(colorIndex1).getColorCate();
 								String colorName1 = cdd.get(colorIndex1).getColorName();
 							out.print(colorCate1 + "_" + colorName1); %>
@@ -79,7 +84,7 @@
 					<div>
 					<% for(int i=0; i<sizes1.size(); i++){ %>
 						<%=sizes1.get(i)%>
-						<%=stocks1.get(i)%> <br>
+						<%=stocks1.get(i)%>
 					<% } %>
 					</div>
 				</td>
@@ -91,7 +96,7 @@
 		<table border="1" style="border-collapse: collapse;text-align:center;">
 			<tr>
 				<td>色2</td>
-				<td><% int colorPrint2 = colors.get(1);;
+				<td><% int colorPrint2 = colors.get(1);
 								int colorIndex2 = colorIds.indexOf(colorPrint2);
 								int colorCate2 = cdd.get(colorIndex2).getColorCate();
 								String colorName2 = cdd.get(colorIndex2).getColorName();
@@ -115,7 +120,7 @@
 		<table border="1" style="border-collapse: collapse;text-align:center;">
 			<tr>
 				<td>色3</td>
-				<td><% int colorPrint3 = colors.get(2);;
+				<td><% int colorPrint3 = colors.get(2);
 								int colorIndex3 = colorIds.indexOf(colorPrint3);
 								int colorCate3 = cdd.get(colorIndex3).getColorCate();
 								String colorName3 = cdd.get(colorIndex3).getColorName();
@@ -145,13 +150,13 @@
 						<img src="img/<%=pmd.getImg2() %>" style="width:100px; height:100px;"><br>
 						<% } %>
 						<%if (pmd.getImg3() != null){ %>
-						<img src="img/<%=pmd.getImg1() %>" style="width:100px; height:100px;"><br>
+						<img src="img/<%=pmd.getImg3() %>" style="width:100px; height:100px;"><br>
 						<% } %>
 						<%if (pmd.getImg4() != null){ %>
-						<img src="img/<%=pmd.getImg1() %>" style="width:100px; height:100px;"><br>
+						<img src="img/<%=pmd.getImg4() %>" style="width:100px; height:100px;"><br>
 						<% } %>
 						<%if (pmd.getImg5() != null){ %>
-						<img src="img/<%=pmd.getImg1() %>" style="width:100px; height:100px;"><br>
+						<img src="img/<%=pmd.getImg5() %>" style="width:100px; height:100px;"><br>
 						<% } %>
 					</div>
 				</td>
