@@ -46,9 +46,9 @@ public class ProductMasterDAO {
 
             ResultSet rs = st.executeQuery();
             rs.next();
-            ProductMasterDTO resultUd = new ProductMasterDTO();
+            ProductMasterDTO resultPd = new ProductMasterDTO();
             int masterid = rs.getInt(1);
-            resultUd.setMasterId(masterid);
+            resultPd.setMasterId(masterid);
 
             System.out.println("マスターidをセット");
 
@@ -84,7 +84,7 @@ public class ProductMasterDAO {
                 System.out.println("imgいれた");
             }
 
-            return resultUd;
+            return resultPd;
 
         }catch(SQLException e){
             System.out.println(e.getMessage());
@@ -94,7 +94,139 @@ public class ProductMasterDAO {
                 con.close();
             }
         }
+    }
+        //マスターの登録と登録idの返却
+        public ArrayList<ProductMasterDTO> searchMasterId() throws SQLException{
+            Connection con = null;
+            PreparedStatement st = null;
+            try{
+            	con = DBManager.getConnection();
+                st =  con.prepareStatement ("SELECT product_master_id FROM ProductMasters");
+                ResultSet rs = st.executeQuery();
+
+                ArrayList<ProductMasterDTO> resultPd = new ArrayList<ProductMasterDTO> ();
+
+                while(rs.next()) {
+                int masterid = rs.getInt("product_master_id");
+                ProductMasterDTO masters = new ProductMasterDTO();
+                masters.setMasterId(masterid);
+                resultPd.add(masters);
+
+                }
+
+                return resultPd;
+
+            }catch(SQLException e){
+                System.out.println(e.getMessage());
+                throw new SQLException(e);
+            }finally{
+                if(con != null){
+                    con.close();
+                }
+            }
+        }
+
+        //商品登録の検索
+        public ArrayList<ProductMasterDTO> searchProduct(ProductMasterDTO pmd,ProductDataDTO pdd) throws SQLException{
+            Connection con = null;
+            PreparedStatement st = null;
+
+            //product_master_id,product_master_name,product_cost,integer,product_color_id,product_size,stock_quantity, product_exibition_status
+    		//?の位置を判定するために配列を用意
+    		ArrayList<String> params = new ArrayList<>();
+
+            try{
+            	con = DBManager.getConnection();
+
+            	String sql ="SELECT Products.product_master_id,product_master_name,product_price,product_color_id,product_size,stock_quantity, product_exibition_status FROM ProductMasters,Products";
+                boolean flag = false;
+
+                if (pmd.getMasterId()!=0) {
+                    sql += " WHERE Products.product_master_id = ?";
+                    flag = true;
+    				params.add("materId");
+                }
+                if (!pmd.getMasterName().equals("")) {
+                    if(!flag){
+                        sql += " WHERE product_master_name like ?";
+                        flag = true;
+                    }else{
+                        sql += " AND product_master_name like ?";
+                    }
+        			params.add("masterName");
+                }
+                if (pdd.getPColor()!=0) {
+                    if(!flag){
+                        sql += " WHERE product_color_id =?";
+                        flag = true;
+                    }else{
+                        sql += " AND product_color_id = ?";
+                    }
+        			params.add("color");
+                }
+                if (!pdd.getSize().equals("")) {
+                    if(!flag){
+                        sql += " WHERE product_size = ?";
+                        flag = true;
+                    }else{
+                        sql += " AND product_size =?";
+                    }
+        			params.add("size");
+                }
+                st =  con.prepareStatement(sql);
+
+                int index = 0;
+                if (params.contains("materId")) {
+                	st.setInt(++index, pmd.getMasterId());
+                }
+                if (params.contains("masterName")) {
+                    st.setString(++index, "%"+pmd.getMasterName()+"%");
+
+            	}
+                if (params.contains("color")) {
+                	st.setInt(++index, pdd.getPColor());
+                }
+                if (params.contains("size")) {
+                    st.setString(++index, "%"+pdd.getSize()+"%");
+                }
+
+                ResultSet rs = st.executeQuery();
+                ArrayList<ProductMasterDTO> productList = new ArrayList<ProductMasterDTO> ();
+
+                while(rs.next()) {
+
+                ProductMasterDTO resultPd = new ProductMasterDTO();
+
+	           	 //resultPd(javabeans)(のアレイリスト)に結果をセットしていく
+	           	 resultPd.setMasterId(rs.getInt("product_master_id"));
+	           	 resultPd.setMasterName(rs.getString("product_master_name"));
+	           	 resultPd.setListPrice(rs.getInt("product_price"));
+	           	 Boolean p = rs.getBoolean("product_exibition_status");
+	           	 if (p=true) {
+	           		resultPd.setPublish(1);
+	           	 }else {
+	           		resultPd.setPublish(0);
+	           	 }
+	           	 resultPd.setSize(rs.getString("product_size"));
+	           	 resultPd.setPColor(rs.getInt("product_color_id"));
+	           	 resultPd.setStock(rs.getInt("stock_quantity"));
+
+	           	productList.add(resultPd);
+
+                }
+
+                return productList;
+
+            }catch(SQLException e){
+                System.out.println(e.getMessage());
+                throw new SQLException(e);
+            }finally{
+                if(con != null){
+                    con.close();
+                }
+            }
 
     }
+
 
 }

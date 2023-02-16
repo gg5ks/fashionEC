@@ -43,6 +43,9 @@ public class Admin_Product_Index extends HttpServlet {
 			ArrayList<ColorDataDTO> colorList = ColorDataDAO.getInstance().colorReceive(color);
 			session.setAttribute("colorList", colorList);
 
+			//マスターID呼び出して選択プルダウンを出せるようにする
+			ArrayList<ProductMasterDTO> masterList = ProductMasterDAO.getInstance().searchMasterId();
+			session.setAttribute("masterList", masterList);
 
 			String mail = request.getParameter("mail");
 			System.out.println(mail);

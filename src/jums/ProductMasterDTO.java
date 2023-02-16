@@ -1,6 +1,7 @@
 package jums;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class ProductMasterDTO implements Serializable{
 
@@ -11,6 +12,12 @@ public class ProductMasterDTO implements Serializable{
 	private int cost;
 	private String productDescript;
 	private int publish;
+	private ArrayList<Integer> masters;
+
+	//商品
+	private int pColor;
+	private String size;
+	private int stock;
 
 	public void setMasterId(int masterId) {
 		this.masterId = masterId;
@@ -52,6 +59,12 @@ public class ProductMasterDTO implements Serializable{
 		}
 	}
 
+	public ArrayList<Integer> setMasters(ArrayList<Integer> masters){
+		return this.masters = masters;
+	}
+	public ArrayList<Integer> getMasters(){
+		return masters;
+	}
 
 	public void setProductDescript(String productDescript) {
 		this.productDescript = productDescript;
@@ -59,4 +72,29 @@ public class ProductMasterDTO implements Serializable{
 	public String getProductDescript() {
 		return productDescript;
 	}
+
+	public void setPColor(int pColor) {
+		this.pColor = pColor;
+	}
+
+	public int getPColor() {
+		return pColor;
+	}
+	public void setSize(String size) {
+		this.size = size;
+	}
+	public String getSize() {
+		return size;
+	}
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
+	public int getStock() {
+		return stock;
+	}
+    public void setProductList(int masterId,int listPrice,int publish,String masterName,int pColor, String size,int stock) {
+		this.pColor = pColor;
+		this.size = size;
+		this.stock = stock;
+    }
 }
