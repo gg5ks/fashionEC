@@ -1,6 +1,10 @@
 package jums;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,7 +32,55 @@ public class User_SearchResult extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.getRequestDispatcher("/User_SearchReslt.jsp").forward(request, response);
+
+		try {
+			//戻り値のセット
+			ArrayList<UserProductListBeans> UPLB = new ArrayList<UserProductListBeans>();
+
+			ArrayList<ProductMasterDTO> PdList = ProductMasterDAO.getInstance().UserIndexProduct();
+
+
+			//MasterIDを基にColor & SizeセットしているProductDataDTOを取得
+			//色とサイズの重複をなくす
+			//UserProductListBeansにセット
+
+
+			for(ProductMasterDTO a:PdList) {
+				ArrayList<ProductDataDTO> PdCSList = ProductDataDAO.getInstance().UserIndexProduct(a);
+
+				//Colorを配列にして重複をなくす
+				ArrayList<Integer> AllColor = new ArrayList<Integer>();
+				ArrayList<String> AllSize = new ArrayList<String>();
+				for(ProductDataDTO b:PdCSList) {
+					AllColor.add(b.getPColor());
+					AllSize.add(b.getSize());
+				}
+				Set<Integer> colorset = new HashSet<>(AllColor);
+				ArrayList<Integer> ViewColor = new ArrayList<Integer>(colorset);
+
+				Set<String> sizeset = new HashSet<>(AllSize);
+				ArrayList<String> ViewSize = new ArrayList<String>(sizeset);
+
+				UserProductListBeans uplb = new UserProductListBeans();
+				uplb.setpColor(ViewColor);
+				uplb.setSize(ViewSize);
+				uplb.setMasterId(a.getMasterId());
+				uplb.setMasterName(a.getMasterName());
+				uplb.setListPrice(a.getListPrice());
+				uplb.setMasterImg(a.getImg1());
+				UPLB.add(uplb);
+			}
+
+
+
+			request.setAttribute("UPLB", UPLB);
+
+			request.getRequestDispatcher("/User_SearchResult.jsp").forward(request, response);
+
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
 	}
 
 	/**

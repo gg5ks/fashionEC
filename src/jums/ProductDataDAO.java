@@ -2,6 +2,7 @@ package jums;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -43,5 +44,47 @@ public class ProductDataDAO {
 	        }
 	     }
 
+
+	    public ArrayList<ProductDataDTO> UserIndexProduct(ProductMasterDTO PmDTO) throws SQLException{
+			 Connection con = null;
+			 PreparedStatement st = null;
+
+
+		        try{
+		            con = DBManager.getConnection();
+
+		            String sql = "SELECT product_color_id,product_size FROM Products where product_master_id = ?;";
+		            st =  con.prepareStatement(sql);
+		            st.setInt(1,PmDTO.getMasterId());
+
+		            System.out.println(st);
+
+		            ResultSet rs = st.executeQuery();
+		            ArrayList<ProductDataDTO> PdCSList = new ArrayList<ProductDataDTO>();
+
+		        while(rs.next()) {
+	           	 //繰り返しinstanceを生成し続ける
+		        	ProductDataDTO resultUd = new ProductDataDTO();
+
+	           	 //resultUd(dto)(のアレイリスト)に結果をセットしていく
+
+		        	resultUd.setPColor(rs.getInt(1));
+		            resultUd.setSize(rs.getString(2));
+
+	                //resultUd(インスタンス1）に結果が入ったリストをセットする→インスタンス2以降も格納続ける
+	                PdCSList.add(resultUd);
+	            }
+
+		        return PdCSList;
+
+		        }catch(SQLException e){
+		            System.out.println(e.getMessage());
+		            throw new SQLException(e);
+		        }finally{
+		            if(con != null){
+		                con.close();
+		            }
+		        }
+		 }
 
 }

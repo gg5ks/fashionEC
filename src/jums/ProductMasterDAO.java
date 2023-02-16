@@ -227,10 +227,35 @@ public class ProductMasterDAO {
             }
 
     }
-        
-        public ArrayList<ProductMasterDTO> UserIndexProduct(ProductMasterDTO pmd,ProductDataDTO pdd) throws SQLException{
+
+        public ArrayList<ProductMasterDTO> UserIndexProduct() throws SQLException{
             Connection con = null;
             PreparedStatement st = null;
+			try {
+				con = DBManager.getConnection();
+
+				String sql = "Select product_master_id,product_master_name,product_price,product_image1 from ProductMasters where product_exibition_status = false";
+				st =  con.prepareStatement(sql);
+				ResultSet rs = st.executeQuery();
+				ArrayList<ProductMasterDTO> UserIndexPdList = new ArrayList<ProductMasterDTO> ();
+				while(rs.next()) {
+					 ProductMasterDTO resultPMDTO = new ProductMasterDTO();
+					 resultPMDTO.setMasterId(rs.getInt(1));
+		           	 resultPMDTO.setMasterName(rs.getString(2));
+		           	 resultPMDTO.setListPrice(rs.getInt(3));
+		           	 resultPMDTO.setImg1(rs.getString(4));
+
+		           	 UserIndexPdList.add(resultPMDTO);
+				}
+				return UserIndexPdList;
+			}catch(SQLException e){
+                System.out.println(e.getMessage());
+                throw new SQLException(e);
+            }finally{
+                if(con != null){
+                    con.close();
+                }
+            }
         }
 
 
