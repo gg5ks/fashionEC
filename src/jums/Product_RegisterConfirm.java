@@ -149,7 +149,7 @@ public class Product_RegisterConfirm extends HttpServlet {
 			//String filename=part.getSubmittedFileName();//ie対応が不要な場合
 			String filename =Paths.get(part.getSubmittedFileName()).getFileName().toString();		//アップロードするフォルダ
 			System.out.println(filename);
-			String path=getServletContext().getRealPath("/img");
+			String path = getServletContext().getRealPath("/img");
 			//実際にファイルが保存されるパス確認
 			System.out.println(path);
 			//書き込み
