@@ -144,7 +144,7 @@ public class ProductMasterDAO {
                 if (pmd.getMasterId()!=0) {
                     sql += " WHERE Products.product_master_id = ?";
                     flag = true;
-    				params.add("materId");
+    				params.add("masterId");
                 }
                 if (!pmd.getMasterName().equals("")) {
                     if(!flag){
@@ -176,7 +176,7 @@ public class ProductMasterDAO {
                 st =  con.prepareStatement(sql);
 
                 int index = 0;
-                if (params.contains("materId")) {
+                if (params.contains("masterId")) {
                 	st.setInt(++index, pmd.getMasterId());
                 }
                 if (params.contains("masterName")) {
@@ -227,6 +227,11 @@ public class ProductMasterDAO {
             }
 
     }
+        
+        public ArrayList<ProductMasterDTO> UserIndexProduct(ProductMasterDTO pmd,ProductDataDTO pdd) throws SQLException{
+            Connection con = null;
+            PreparedStatement st = null;
+        }
 
 
 }

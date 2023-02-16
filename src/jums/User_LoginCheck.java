@@ -16,12 +16,14 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet Filter implementation class User_LoginCheck
  */
+
 @WebFilter(urlPatterns={"/User_MyPage","/User_QuitService","/User_UpdateAcount"})
 public class User_LoginCheck implements Filter {
 
     /**
      * Default constructor.
      */
+
     public User_LoginCheck() {
         // TODO Auto-generated constructor stub
     }
@@ -36,6 +38,7 @@ public class User_LoginCheck implements Filter {
 	/**
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
+
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		// place your code here
