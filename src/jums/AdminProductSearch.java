@@ -57,18 +57,20 @@ public class AdminProductSearch extends HttpServlet {
             if(searchMasterName != null) {
             	pmd4s.setMasterName(searchMasterName);
             }
-            if(searchColor != null) {
+            if(searchColor != null||searchColor!="0") {
             	pdd4s.setPColor(Integer.parseInt(searchColor));
             }
             if(searchSize != null) {
             	pdd4s.setSize(searchSize);
             }
-            if(searchPublish != null) {
+            if(searchPublish != null||searchPublish!="9") {
             	pmd4s.setPublish(Integer.parseInt(searchPublish));
             }
+            int publishCheck = (Integer.parseInt(searchPublish));
+            ArrayList<ProductMasterDTO> searchResult = ProductMasterDAO.getInstance().searchProduct(pmd4s,pdd4s,publishCheck);
+            session.setAttribute("searchResult",searchResult);
 
-            ArrayList<ProductMasterDTO> searchResult = ProductMasterDAO.getInstance().searchProduct(pmd4s,pdd4s);
-
+            request.getParameter("searching");
             request.getRequestDispatcher("/Admin_Product_Index.jsp").forward(request, response);
 
 

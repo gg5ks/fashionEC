@@ -8,20 +8,20 @@
 %>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	<% if(error_flag){out.print("<p>ログインエラーが発生しました</p>");} %>
-	<h1>ログイン</h1>
-	<form action="Admin_Product_Index" method="post">
-		<p>メールアドレス：</p>
-			<input type="text" name="mail">
-		<p>パスワード：</p>
-			<input type="text" name="pass">
-		<br><br>
-		<input type="submit" value="ログイン">
-	</form>
-</body>
+	<head>
+		<meta charset="UTF-8">
+		<title>ログイン</title>
+	</head>
+	<body>
+		<% if(error_flag){out.print("<p>ログインエラーが発生しました</p>");} %>
+		<h1>ログイン</h1>
+		<form action="Admin_Product_Index" method="post">
+			<p>メールアドレス：</p>
+				<input type="text" name="mail">
+			<p>パスワード：</p>
+				<input type="text" name="pass">
+			<br><br>
+			<input type="submit" value="ログイン">
+		</form>
+	</body>
 </html>

@@ -41,7 +41,14 @@ public class Admin_Product_Index extends HttpServlet {
 			ColorDataDTO color = new ColorDataDTO();
 			color.setColorName("");
 			ArrayList<ColorDataDTO> colorList = ColorDataDAO.getInstance().colorReceive(color);
+
+			//色番号呼び出し→名前が出せるようにする
+			ArrayList<Integer> colorNum = new ArrayList<Integer>();
+			for(int i = 0; i<colorList.size(); i++) {
+				colorNum.add(colorList.get(i).getColorId());
+			}
 			session.setAttribute("colorList", colorList);
+			session.setAttribute("colorNum", colorNum);
 
 			//マスターID呼び出して選択プルダウンを出せるようにする
 			ArrayList<ProductMasterDTO> masterList = ProductMasterDAO.getInstance().searchMasterId();

@@ -127,7 +127,7 @@ public class ProductMasterDAO {
         }
 
         //商品登録の検索
-        public ArrayList<ProductMasterDTO> searchProduct(ProductMasterDTO pmd,ProductDataDTO pdd) throws SQLException{
+        public ArrayList<ProductMasterDTO> searchProduct(ProductMasterDTO pmd,ProductDataDTO pdd, int publishCheck) throws SQLException{
             Connection con = null;
             PreparedStatement st = null;
 
@@ -138,7 +138,7 @@ public class ProductMasterDAO {
             try{
             	con = DBManager.getConnection();
 
-            	String sql ="SELECT Products.product_master_id,product_master_name,product_price,product_color_id,product_size,stock_quantity, product_exibition_status FROM ProductMasters,Products";
+            	String sql ="SELECT * FROM Products INNER JOIN ProductMasters on Products.product_master_id = ProductMasters.product_master_id";
                 boolean flag = false;
 
                 if (pmd.getMasterId()!=0) {
@@ -173,6 +173,15 @@ public class ProductMasterDAO {
                     }
         			params.add("size");
                 }
+                if (publishCheck != 9) {
+                    if(!flag){
+                        sql += " WHERE product_exibition_status = ?";
+                        flag = true;
+                    }else{
+                        sql += " AND product_exibition_status =?";
+                    }
+        			params.add("publish");
+                }
                 st =  con.prepareStatement(sql);
 
                 int index = 0;
@@ -187,9 +196,12 @@ public class ProductMasterDAO {
                 	st.setInt(++index, pdd.getPColor());
                 }
                 if (params.contains("size")) {
-                    st.setString(++index, "%"+pdd.getSize()+"%");
+                    st.setString(++index, pdd.getSize());
                 }
-
+                if (params.contains("publish")) {
+                    st.setBoolean(++index, pmd.getPublish());
+                }
+                System.out.println(st);
                 ResultSet rs = st.executeQuery();
                 ArrayList<ProductMasterDTO> productList = new ArrayList<ProductMasterDTO> ();
 
@@ -202,7 +214,7 @@ public class ProductMasterDAO {
 	           	 resultPd.setMasterName(rs.getString("product_master_name"));
 	           	 resultPd.setListPrice(rs.getInt("product_price"));
 	           	 Boolean p = rs.getBoolean("product_exibition_status");
-	           	 if (p=true) {
+	           	 if (p) {
 	           		resultPd.setPublish(1);
 	           	 }else {
 	           		resultPd.setPublish(0);
@@ -210,11 +222,11 @@ public class ProductMasterDAO {
 	           	 resultPd.setSize(rs.getString("product_size"));
 	           	 resultPd.setPColor(rs.getInt("product_color_id"));
 	           	 resultPd.setStock(rs.getInt("stock_quantity"));
-
+	           	System.out.println(rs.getInt("stock_quantity"));
 	           	productList.add(resultPd);
 
                 }
-
+                System.out.println("検索終了");
                 return productList;
 
             }catch(SQLException e){

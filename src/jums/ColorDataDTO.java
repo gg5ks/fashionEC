@@ -40,7 +40,7 @@ public class ColorDataDTO implements Serializable {
 	public String getColorCss() {
 		return colorCss;
 	}
-    public  ArrayList<ColorDataDTO> getColor() {
+    public ArrayList<ColorDataDTO> getColor() {
         return color;
     }
 
