@@ -38,6 +38,18 @@ public class Product_DeleteConfirm extends HttpServlet {
             if(accesschk ==null ||session.getAttribute("ac")==null|| (Integer)session.getAttribute("ac")!=Integer.parseInt(accesschk)){
                 throw new Exception("不正なアクセスです");
             }
+                if(request.getParameter("delete")!= null ||request.getParameter("delete")== "yes") {
+        			ProductMasterDTO resultMaster = (ProductMasterDTO)session.getAttribute("resultMaster");
+        			int masterId = resultMaster.getMasterId();
+        			ProductDataDAO.getInstance().deleteProduct(masterId);
+                	ProductMasterDTO deleteChk = ProductMasterDAO.getInstance().deleteMaster(masterId);
+                    resultMaster.setDeleteProduct(deleteChk.getDeleteProduct());
+                    session.setAttribute("resultMaster", resultMaster);
+                	request.getRequestDispatcher("/productDetail.jsp").forward(request, response);
+
+                }else {
+                	request.getRequestDispatcher("/productDeleteConfirm.jsp").forward(request, response);
+                }
 
         }catch(Exception e){
             //何らかの理由で失敗したらエラーページにエラー文を渡して表示。想定は不正なアクセスとDBエラー

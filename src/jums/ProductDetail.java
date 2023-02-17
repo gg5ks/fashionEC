@@ -41,6 +41,8 @@ public class ProductDetail extends HttpServlet {
                 throw new Exception("不正なアクセスです");
             }
 
+            //正常遷移と戻る時の判断
+            if (request.getParameter("mId")!=null) {
             int masterId = Integer.parseInt(request.getParameter("mId"));
             ProductMasterDTO resultMaster = ProductMasterDAO.getInstance().searchProDetail(masterId);
             ArrayList<ProductDataDTO> resultProducts = ProductDataDAO.getInstance().proDetailInfo(masterId);
@@ -100,7 +102,7 @@ public class ProductDetail extends HttpServlet {
                     session.setAttribute("sizes3", sizes3);
                 	session.setAttribute("stocks3", stocks3);
                 }
-
+            }
                 request.getRequestDispatcher("/productDetail.jsp").forward(request, response);
         }catch(Exception e){
             //何らかの理由で失敗したらエラーページにエラー文を渡して表示。想定は不正なアクセスとDBエラー

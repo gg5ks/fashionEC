@@ -213,6 +213,7 @@ public class ProductMasterDAO {
 	           	 resultPd.setMasterId(rs.getInt("product_master_id"));
 	           	 resultPd.setMasterName(rs.getString("product_master_name"));
 	           	 resultPd.setListPrice(rs.getInt("product_price"));
+	           	 resultPd.setDeleteProduct(rs.getBoolean("master_delete_flag"));
 	           	 Boolean p = rs.getBoolean("product_exibition_status");
 	           	 if (p) {
 	           		resultPd.setPublish(1);
@@ -262,6 +263,7 @@ public class ProductMasterDAO {
 				 resultPd.setListPrice(rs.getInt("product_price"));
 				 resultPd.setCost(rs.getInt("product_cost"));
 				 resultPd.setProductDescript(rs.getString("product_description"));
+	           	 resultPd.setDeleteProduct(rs.getBoolean("master_delete_flag"));
 
 				 Boolean p = rs.getBoolean("product_exibition_status");
 				 if (p) {
@@ -319,6 +321,40 @@ public class ProductMasterDAO {
                 }
             }
         }
+        //削除用
+        public ProductMasterDTO deleteMaster(int masterId) throws SQLException{
+            Connection con = null;
+            PreparedStatement st = null;
+
+            try{
+                con = DBManager.getConnection();
+                st =  con.prepareStatement ("UPDATE ProductMasters SET master_delete_flag = TRUE WHERE product_master_id=?");
+                st.setInt(1, masterId);
+                st.executeUpdate();
+
+                //削除確認用
+        		String sql = "SELECT master_delete_flag FROM ProductMasters WHERE product_master_id=?";
+
+                st =  con.prepareStatement(sql);
+
+                st.setInt(1, masterId);
+                ResultSet rs = st.executeQuery();
+
+                rs.next();
+                ProductMasterDTO resultPd = new ProductMasterDTO();
+                resultPd.setDeleteProduct(rs.getBoolean(1));
+
+                return resultPd;
+
+		}catch(SQLException e){
+            System.out.println(e.getMessage());
+            throw new SQLException(e);
+        }finally{
+            if(con != null){
+                con.close();
+            }
+        }
+    }
 
 
 }

@@ -42,6 +42,10 @@
         <div class="split-right__inner">
 
             <h1>商品詳細</h1>
+            <% Boolean deleteChk = pmd.getDeleteProduct();
+            if (deleteChk){%>
+            	<h3 style="color:red;">削除された商品です</h3>
+            <%}%>
 		<table border="1" style="border-collapse: collapse;text-align:center;">
 			<tr>
 				<td>商品シリーズID</td>
@@ -84,7 +88,7 @@
 					<div>
 					<% for(int i=0; i<sizes1.size(); i++){ %>
 						<%=sizes1.get(i)%>
-						<%=stocks1.get(i)%>
+						<%=stocks1.get(i)%><br>
 					<% } %>
 					</div>
 				</td>
@@ -176,9 +180,19 @@
 				</td>
 			</tr>
 		</table>
+		<br><br>
 
-
-
+        <% if (deleteChk){
+        }else {%>
+		<form action = "Product_DeleteConfirm" method = POST>
+			<input type="hidden" name="ac"  value="<%= hs.getAttribute("ac")%>">
+			<input type="submit" value="削除する">
+		</form>
+		<form action = "Product_Update" method = POST>
+			<input type="hidden" name="ac"  value="<%= hs.getAttribute("ac")%>">
+			<input type="submit" value="変更する">
+		</form>
+		<%} %>
         </div>
     </div>
 </div>

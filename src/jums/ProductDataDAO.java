@@ -124,4 +124,27 @@ public class ProductDataDAO {
 		        }
 		 }
 
+        //削除用
+        public void deleteProduct(int masterId) throws SQLException{
+            Connection con = null;
+            PreparedStatement st = null;
+
+            try{
+                con = DBManager.getConnection();
+                st =  con.prepareStatement ("UPDATE Products SET product_delete_flag = 1 WHERE product_master_id=?");
+                st.setInt(1, masterId);
+                st.executeUpdate();
+
+		}catch(SQLException e){
+            System.out.println(e.getMessage());
+            throw new SQLException(e);
+        }finally{
+            if(con != null){
+                con.close();
+            }
+        }
+    }
+
+
+
 }
