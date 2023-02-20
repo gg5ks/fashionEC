@@ -59,9 +59,13 @@ public class Admin_Product_Index extends HttpServlet {
 
 
 			AdminDataDTO AdExist = AdminDataDAO.getInstance().IDPWCheck(mail);
-           //セッションにログイン者の情報を保存する→ログイン情報を確認したいときに使う
-			session.setAttribute("AdExist", AdExist);
-			System.out.println(AdExist.getAdmin_id());
+
+	           //セッションにログイン者の情報を保存する→ログイン情報を確認したいときに使う
+			if (AdExist != null) {
+				session.setAttribute("AdExist", AdExist);
+				System.out.println(AdExist.getAdmin_id());
+			}else {
+			}
 
             //DBからのパスワード結果と入力パスワードの判定素材を揃える
             //DBからの返事
@@ -75,7 +79,9 @@ public class Admin_Product_Index extends HttpServlet {
             //userIDのセッション保存はここで行う→login画面でのジャッジに使ってるため
 			//deleteFlg見直し！
             if (passwordA !=null){
-    			request.getRequestDispatcher("/Admin_Product_Index.jsp").forward(request, response);
+
+
+            	request.getRequestDispatcher("/Admin_Product_Index.jsp").forward(request, response);
 
            	//パスワードが一致しなかったら
             }else if (passwordA != passwordW){

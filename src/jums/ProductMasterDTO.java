@@ -13,6 +13,7 @@ public class ProductMasterDTO implements Serializable{
 	private String productDescript;
 	private int publish;
 	private ArrayList<Integer> masters;
+	private Boolean deleteProduct;
 
     private String img1;
     private String img2;
@@ -136,5 +137,11 @@ public class ProductMasterDTO implements Serializable{
 		this.size = size;
 		this.stock = stock;
     }
+	public Boolean getDeleteProduct() {
+		return deleteProduct;
+	}
+	public void setDeleteProduct(Boolean deleteProduct) {
+		this.deleteProduct = deleteProduct;
+	}
 
 }

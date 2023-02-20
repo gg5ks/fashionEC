@@ -24,7 +24,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>商品登録完了</title>
+<title>削除確認</title>
 </head>
 <body>
 <div class="split" style="display:table;">
@@ -41,11 +41,7 @@
     <div class="split-item split-right"style="display:table-cell;position: relative; width: 70%;">
         <div class="split-right__inner">
 
-            <h1>商品詳細</h1>
-            <% Boolean deleteChk = pmd.getDeleteProduct();
-            if (deleteChk){%>
-            	<h3 style="color:red;">削除された商品です</h3>
-            <%}%>
+            <h1>削除確認</h1>
 		<table border="1" style="border-collapse: collapse;text-align:center;">
 			<tr>
 				<td>商品シリーズID</td>
@@ -74,9 +70,7 @@
 			<tr>
 				<td>色1</td>
 				<td><% int colorPrint1 = colors.get(0);
-				System.out.println(colorPrint1);
 								int colorIndex1 = colorIds.indexOf(colorPrint1);
-								System.out.println(colorIndex1);
 								int colorCate1 = cdd.get(colorIndex1).getColorCate();
 								String colorName1 = cdd.get(colorIndex1).getColorName();
 							out.print(colorCate1 + "_" + colorName1); %>
@@ -181,18 +175,15 @@
 			</tr>
 		</table>
 		<br><br>
-
-        <% if (deleteChk){
-        }else {%>
+		<form action = "ProductDetail" method = POST>
+			<input type="hidden" name="ac"  value="<%= hs.getAttribute("ac")%>">
+			<input type="submit" value="戻る">
+		</form>
 		<form action = "Product_DeleteConfirm" method = POST>
 			<input type="hidden" name="ac"  value="<%= hs.getAttribute("ac")%>">
+			<input type="hidden" name="delete"  value="yes">
 			<input type="submit" value="削除する">
 		</form>
-		<form action = "Product_Update" method = POST>
-			<input type="hidden" name="ac"  value="<%= hs.getAttribute("ac")%>">
-			<input type="submit" value="変更する">
-		</form>
-		<%} %>
         </div>
     </div>
 </div>
