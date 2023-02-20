@@ -290,7 +290,7 @@ public class ProductMasterDAO {
             }
 
     }
-
+        //利用者商品一覧用
         public ArrayList<ProductMasterDTO> UserIndexProduct(String keyword ,int[] pricerange) throws SQLException{
 
             Connection con = null;
@@ -303,7 +303,7 @@ public class ProductMasterDAO {
 				String sql = "Select product_master_id,product_master_name,product_price,product_image1 from ProductMasters where product_exibition_status = false";
 				//検索
 				if (!keyword.equals("")) {
-					sql += " AND product_master_name like ? AND product_description like ?";
+					sql += " AND (product_master_name like ? or product_description like ?)";
 					params.add("keyword");
 				}
 
@@ -321,7 +321,7 @@ public class ProductMasterDAO {
 	    			sql += "AND product_price >= ? ";
 	    			params.add("price3");
 	    		}
-	    		System.out.print(sql);
+
 				st =  con.prepareStatement(sql);
 
 				int aaa = 0;
@@ -339,7 +339,7 @@ public class ProductMasterDAO {
 				if(params.contains("price3")) {
 					st.setInt(++aaa,pricerange[0]);
 				}
-
+				System.out.println(st);
 				ResultSet rs = st.executeQuery();
 				ArrayList<ProductMasterDTO> UserIndexPdList = new ArrayList<ProductMasterDTO> ();
 				while(rs.next()) {

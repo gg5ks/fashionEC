@@ -43,6 +43,7 @@ public class ProductDataDAO {
 	            }
 	        }
 	     }
+
         //商品詳細表示用
         public ArrayList<ProductDataDTO> proDetailInfo(int masterId) throws SQLException{
             Connection con = null;
@@ -60,14 +61,13 @@ public class ProductDataDAO {
                 while(rs.next()) {
                 	ProductDataDTO resultPd = new ProductDataDTO();
 
+	           //resultPd(javabeans)(のアレイリスト)に結果をセットしていく
+	           resultPd.setPColor(rs.getInt("product_color_id"));
+	           resultPd.setSize(rs.getString("product_size"));
+	           resultPd.setStock(rs.getInt("stock_quantity"));
 
-	           	 //resultPd(javabeans)(のアレイリスト)に結果をセットしていく
-	           	 resultPd.setPColor(rs.getInt("product_color_id"));
-	           	 resultPd.setSize(rs.getString("product_size"));
-	           	 resultPd.setStock(rs.getInt("stock_quantity"));
-
-	           	 resultList.add(resultPd);
-                }
+	           resultList.add(resultPd);
+               }
                 System.out.println("詳細用見つけた4product");
                 return resultList;
 
@@ -118,20 +118,25 @@ public class ProductDataDAO {
 		            ResultSet rs = st.executeQuery();
 		            ArrayList<ProductDataDTO> PdCSList = new ArrayList<ProductDataDTO>();
 
-		        while(rs.next()) {
-	           	 //繰り返しinstanceを生成し続ける
-		        	ProductDataDTO resultUd = new ProductDataDTO();
+		        if(rs.next()) {
+		            while(rs.next()) {
+		           	 //繰り返しinstanceを生成し続ける
+			        	ProductDataDTO resultUd = new ProductDataDTO();
 
-	           	 //resultUd(dto)(のアレイリスト)に結果をセットしていく
+		           	 //resultUd(dto)(のアレイリスト)に結果をセットしていく
 
-		        	resultUd.setPColor(rs.getInt(1));
-		            resultUd.setSize(rs.getString(2));
+			        	resultUd.setPColor(rs.getInt("product_color_id"));
+			            resultUd.setSize(rs.getString("product_size"));
 
-	                //resultUd(インスタンス1）に結果が入ったリストをセットする→インスタンス2以降も格納続ける
-	                PdCSList.add(resultUd);
-	            }
+		                //resultUd(インスタンス1）に結果が入ったリストをセットする→インスタンス2以降も格納続ける
+		                PdCSList.add(resultUd);
+		            }
+			        return PdCSList;
 
-		        return PdCSList;
+		        }else {
+		        	return PdCSList;
+		        }
+
 
 		        }catch(SQLException e){
 		            System.out.println(e.getMessage());

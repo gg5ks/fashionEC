@@ -43,7 +43,7 @@ public class User_SearchResult extends HttpServlet {
 			int color = Integer.parseInt(request.getParameter("color"));
 			String size = request.getParameter("size");
 
-			System.out.print(pricerange[0]);
+			//System.out.print(pricerange[0]);
 
 			//Masterの絞り込み検索＋一覧表示の取得
 			ArrayList<ProductMasterDTO> PdList = ProductMasterDAO.getInstance().UserIndexProduct(keyword, pricerange);
@@ -78,7 +78,7 @@ public class User_SearchResult extends HttpServlet {
 				UPLB.add(uplb);
 			}
 
-
+			System.out.print(UPLB.size());
 
 			request.setAttribute("UPLB", UPLB);
 

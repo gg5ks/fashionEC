@@ -19,7 +19,6 @@
 
 	<% for(UserProductListBeans uplb:PdList){ %>
 	<div style="border: solid 1px black;">
-		<%System.out.print(uplb.getMasterId()); %>
 		<form action="User_ProductDetail?id=<%=uplb.getMasterId() %>" method="post"><input type="submit"></form>
 		<p><%=uplb.getMasterName() %></p>
 
