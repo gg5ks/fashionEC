@@ -82,7 +82,7 @@ public class ProductDataDAO {
 
     }
 
-	    public ArrayList<ProductDataDTO> UserIndexProduct(ProductMasterDTO PmDTO) throws SQLException{
+	    public ArrayList<ProductDataDTO> UserIndexProduct(ProductMasterDTO PmDTO, int color, String size) throws SQLException{
 			 Connection con = null;
 			 PreparedStatement st = null;
 
@@ -90,9 +90,28 @@ public class ProductDataDAO {
 		        try{
 		            con = DBManager.getConnection();
 
-		            String sql = "SELECT product_color_id,product_size FROM Products where product_master_id = ?;";
+		            String sql = "SELECT product_color_id,product_size FROM Products where product_master_id = ?";
+
+		            ArrayList<String> param = new ArrayList<String>();
+		            if(color != 0) {
+		            	sql += " AND product_color_id = ?";
+		            	param.add("color");
+		            }
+		            if(size != "") {
+		            	sql += " AND product_size = ?";
+		            	param.add("size");
+		            }
+
 		            st =  con.prepareStatement(sql);
 		            st.setInt(1,PmDTO.getMasterId());
+
+		            int i = 1;
+		            if(param.contains("color")) {
+		            	st.setInt(++i, color);
+		            }
+		            if(param.contains("size")) {
+		            	st.setString(++i, size);
+		            }
 
 		            System.out.println(st);
 

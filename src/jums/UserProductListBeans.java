@@ -11,6 +11,14 @@ public class UserProductListBeans implements Serializable{
 	private int listPrice;
 	private String masterImg;
 
+	public UserProductListBeans() {
+		this.masterId = 0;
+		this.masterName = "";
+		this.pColor = new ArrayList<Integer>();
+		this.listPrice = 0;
+		this.masterImg ="";
+	}
+
 	public int getMasterId() {
 		return masterId;
 	}

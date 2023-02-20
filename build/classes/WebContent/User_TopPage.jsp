@@ -28,18 +28,42 @@
 				</td>
 
 				<td>
-					<select>
-						<option>----</option>
+					<select name="color">
+						<option value="0">----</option>
+						<option value="1">ホワイト</option>
+						<option value="2">グレー</option>
+						<option value="3">ブラック</option>
+						<option value="4">レッド</option>
+						<option value="5">オレンジ</option>
+						<option value="6">ブラウン</option>
+						<option value="7">イエロー</option>
+						<option value="8">グリーン</option>
+						<option value="9">ブルー</option>
+						<option value="10">パープル</option>
+					</select>
+
+				</td>
+				<td>
+					<select name="size">
+						<option value="">----</option>
+						<option value="FS">FS</option>
+						<option value="FM">FM</option>
+						<option value="FL">FL</option>
+						<option value="FXL">FXL</option>
+						<option value="MS">MS</option>
+						<option value="MM">MM</option>
+						<option value="ML">ML</option>
+						<option value="MXL">MXL</option>
 					</select>
 				</td>
 				<td>
-					<select>
-						<option>----</option>
-					</select>
-				</td>
-				<td>
-					<select>
-						<option>----</option>
+					<select name="price">
+						<option value="0">----</option>
+						<option value="1">～5000円</option>
+						<option value="2">5001円～10000円</option>
+						<option value="3">10001円～15000円</option>
+						<option value="4">15001円～20000円</option>
+						<option value="5">20001円～</option>
 					</select>
 				</td>
 			</tr>

@@ -289,15 +289,55 @@ public class ProductMasterDAO {
 
     }
 
-        public ArrayList<ProductMasterDTO> UserIndexProduct() throws SQLException{
+        public ArrayList<ProductMasterDTO> UserIndexProduct(String keyword ,int[] pricerange) throws SQLException{
 
             Connection con = null;
             PreparedStatement st = null;
+          //?の位置を判定するために配列を用意
+            ArrayList<String> params = new ArrayList<>();
 			try {
 				con = DBManager.getConnection();
 
 				String sql = "Select product_master_id,product_master_name,product_price,product_image1 from ProductMasters where product_exibition_status = false";
+				//検索
+				if (!keyword.equals("")) {
+					sql += " AND product_master_name like ? AND product_description like ?";
+					params.add("keyword");
+				}
+
+				//価格pulldownで条件分岐
+	    		if(pricerange[0] != 0 && pricerange[1] != 0) {
+	    			sql +=" AND product_price >= ? AND product_price <= ?";
+	    			params.add("price2");
+	    		}
+	    		if(pricerange[1] == 5000) {
+	    			sql += "AND product_price <= ? ";
+	    			params.add("price1");
+	    		}
+
+	    		if(pricerange[0] == 20001) {
+	    			sql += "AND product_price >= ? ";
+	    			params.add("price3");
+	    		}
+	    		System.out.print(sql);
 				st =  con.prepareStatement(sql);
+
+				int aaa = 0;
+				if(params.contains("keyword")) {
+					st.setString(++aaa,keyword);
+					st.setString(++aaa,keyword);
+				}
+				if(params.contains("price1")) {
+					st.setInt(++aaa,pricerange[1]);
+				}
+				if(params.contains("price2")) {
+					st.setInt(++aaa,pricerange[0]);
+					st.setInt(++aaa,pricerange[1]);
+				}
+				if(params.contains("price3")) {
+					st.setInt(++aaa,pricerange[0]);
+				}
+
 				ResultSet rs = st.executeQuery();
 				ArrayList<ProductMasterDTO> UserIndexPdList = new ArrayList<ProductMasterDTO> ();
 				while(rs.next()) {

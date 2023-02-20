@@ -1,6 +1,8 @@
 package jums;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,9 +30,53 @@ public class User_ProductDetail extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		//System.out.print(request.getParameter("id"));
+		int PMID = Integer.parseInt(request.getParameter("id"));
+		try {
+			User_ProductDetailBeans UPDB = new User_ProductDetailBeans();
+			ProductMasterDTO PMDLeft = ProductMasterDAO.getInstance().searchProDetail(PMID);
 
+			UPDB.setMasterId(PMID);
+			UPDB.setMasterName(PMDLeft.getMasterName());
+			UPDB.setMasterDiscript(PMDLeft.getProductDescript());
+			UPDB.setPrice(PMDLeft.getListPrice());
 
-		request.getRequestDispatcher("/User_ProductDetail.jsp").forward(request, response);
+			ArrayList<String> ImgList = new ArrayList<String>();
+			ImgList.add(PMDLeft.getImg1());
+			if(PMDLeft.getImg2() != null) {
+				ImgList.add(PMDLeft.getImg2());
+			}
+			if(PMDLeft.getImg3() != null) {
+				ImgList.add(PMDLeft.getImg3());
+			}
+			if(PMDLeft.getImg4() != null) {
+				ImgList.add(PMDLeft.getImg4());
+			}
+			if(PMDLeft.getImg5() != null) {
+				ImgList.add(PMDLeft.getImg5());
+			}
+
+			UPDB.setImgList(ImgList);
+
+			//System.out.print("到達しています");
+
+			ArrayList<ProductDataDTO> PdList = ProductDataDAO.getInstance().proDetailInfo(PMID);
+			ArrayList<Integer> Color = User_ProductHelper.getInstance().ColorList(PdList);
+			ArrayList<ArrayList<ProductDataDTO>> SizeAmount = User_ProductHelper.getInstance().SAList(PdList, Color);
+
+			UPDB.setColorIdList(Color);
+			UPDB.setListSizeAmount(SizeAmount);
+
+			request.setAttribute("UPDB", UPDB);
+
+			request.setAttribute("ImgList", ImgList);
+			request.getRequestDispatcher("/User_ProductDetail.jsp").forward(request, response);
+
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+
 	}
 
 	/**
