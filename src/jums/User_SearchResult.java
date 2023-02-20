@@ -54,7 +54,7 @@ public class User_SearchResult extends HttpServlet {
 			//UserProductListBeansにセット
 			for(ProductMasterDTO a:PdList) {
 				ArrayList<ProductDataDTO> PdCSList = ProductDataDAO.getInstance().UserIndexProduct(a, color, size);
-
+				System.out.println(PdCSList.size());
 				//Colorを配列にして重複をなくす
 				ArrayList<Integer> AllColor = new ArrayList<Integer>();
 				ArrayList<String> AllSize = new ArrayList<String>();
@@ -69,16 +69,16 @@ public class User_SearchResult extends HttpServlet {
 				ArrayList<String> ViewSize = new ArrayList<String>(sizeset);
 
 				UserProductListBeans uplb = new UserProductListBeans();
-				uplb.setpColor(ViewColor);
-				uplb.setSize(ViewSize);
-				uplb.setMasterId(a.getMasterId());
-				uplb.setMasterName(a.getMasterName());
-				uplb.setListPrice(a.getListPrice());
-				uplb.setMasterImg(a.getImg1());
-				UPLB.add(uplb);
+				if(PdCSList.size() != 0) {
+					uplb.setpColor(ViewColor);
+					uplb.setSize(ViewSize);
+					uplb.setMasterId(a.getMasterId());
+					uplb.setMasterName(a.getMasterName());
+					uplb.setListPrice(a.getListPrice());
+					uplb.setMasterImg(a.getImg1());
+					UPLB.add(uplb);
+				}
 			}
-
-			System.out.print(UPLB.size());
 
 			request.setAttribute("UPLB", UPLB);
 

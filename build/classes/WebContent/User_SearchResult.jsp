@@ -6,7 +6,8 @@
 %>
 <%
 	HttpSession hs = request.getSession();
-	ArrayList<UserProductListBeans> PdList = (ArrayList<UserProductListBeans>)request.getAttribute("UPLB");
+		ArrayList<UserProductListBeans> PdList = (ArrayList<UserProductListBeans>)request.getAttribute("UPLB");
+
 %>
 <!DOCTYPE html>
 <html>
@@ -16,7 +17,7 @@
 </head>
 <body>
 
-
+<%if(PdList != null) {%>
 	<% for(UserProductListBeans uplb:PdList){ %>
 	<div style="border: solid 1px black;">
 		<form action="User_ProductDetail?id=<%=uplb.getMasterId() %>" method="post"><input type="submit"></form>
@@ -43,6 +44,7 @@
 		</p>
 	</div>
 	<%} %>
+<%} %>
 
 </body>
 </html>
