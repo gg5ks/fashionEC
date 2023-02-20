@@ -30,10 +30,8 @@ public class User_ProductHelper {
 		ArrayList<ProductDataDTO> SA2 = new ArrayList<ProductDataDTO>();
 		ArrayList<ProductDataDTO> SA3 = new ArrayList<ProductDataDTO>();
 
-		int aaa = 0;
+		int aaa = color.get(0);
 		int colorsize = color.size();
-
-		aaa = color.get(0);
 
 		for(ProductDataDTO pdd:Apdd) {
 			if(aaa == pdd.getPColor()) {
@@ -89,4 +87,5 @@ public class User_ProductHelper {
 		}
 		return pr;
 	}
+
 }
