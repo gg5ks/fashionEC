@@ -7,6 +7,7 @@
 <%
 	HttpSession hs = request.getSession();
 	User_ProductDetailBeans UPMD = (User_ProductDetailBeans)request.getAttribute("UPDB");
+	int cid = (int)request.getAttribute("cid");
 %>
 <!DOCTYPE html>
 <html>
@@ -33,7 +34,7 @@
 				<p><%= UPMD.getListSizeAmount().get(i).get(s).getSize() %></p>
 				<select>
 				<% ArrayList<Integer> amount = User_ProductHelper.getInstance().AmountPullDown(UPMD.getListSizeAmount().get(i).get(s).getStock()); %>
-				<%for(int t:amount) %>
+				<%for(int t:amount){ %>
 					<option value=<%=t %>><%=t %></option>
 				<%} %>
 				</select>
