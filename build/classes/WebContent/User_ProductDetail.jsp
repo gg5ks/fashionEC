@@ -7,7 +7,6 @@
 <%
 	HttpSession hs = request.getSession();
 	User_ProductDetailBeans UPMD = (User_ProductDetailBeans)request.getAttribute("UPDB");
-	int cid = (int)request.getAttribute("cid");
 %>
 <!DOCTYPE html>
 <html>
