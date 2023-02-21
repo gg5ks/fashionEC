@@ -33,7 +33,7 @@
 			<%for(int s=0; s< UPMD.getListSizeAmount().get(i).size(); s++){ %>
 				<p> <%= UPMD.getListSizeAmount().get(i).get(s).getSize() %> </p>
 				<select>
-				<%for(int t=1; t<UPMD.getListSizeAmount().get(i).get(s).getStock(); t++) %>
+				<%for(int t=1; t<UPMD.getListSizeAmount().get(i).get(s).getStock(); t++) {%>
 					<option value=<%=t %>><%=t %></option>
 				<%} %>
 				</select>
@@ -41,6 +41,7 @@
 		</div>
 	<%} %>
 	</form>
+
 
 </body>
 </html>
