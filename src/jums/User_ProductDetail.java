@@ -68,13 +68,15 @@ public class User_ProductDetail extends HttpServlet {
 			UPDB.setListSizeAmount(SizeAmount);
 
 			request.setAttribute("UPDB", UPDB);
-
+			request.setAttribute("SizeAmount", SizeAmount);
 			request.setAttribute("ImgList", ImgList);
 			request.getRequestDispatcher("/User_ProductDetail.jsp").forward(request, response);
 
 		} catch (SQLException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
+		}finally {
+			request.getRequestDispatcher("/error.jsp").forward(request, response);
 		}
 
 	}

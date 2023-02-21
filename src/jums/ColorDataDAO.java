@@ -54,4 +54,39 @@ public class ColorDataDAO {
 	            }
 	        }
 	 }
+
+	 public ColorDataDTO UserViewColor(int i) throws SQLException{
+		 Connection con = null;
+		 PreparedStatement st = null;
+
+
+	        try{
+	            con = DBManager.getConnection();
+
+	            String sql = "SELECT * FROM Colors where color_id = ?";
+	            st =  con.prepareStatement(sql);
+	            st.setInt(1, i);
+	            System.out.println(st);
+
+	            ResultSet rs = st.executeQuery();
+           	 //繰り返しinstanceを生成し続ける
+	        	ColorDataDTO resultUd = new ColorDataDTO();
+
+	        	while(rs.next()) {
+	        	resultUd.setColorId(rs.getInt("color_id"));
+	            resultUd.setColorName(rs.getString("color_name"));
+	            resultUd.setColorCate(rs.getInt("color_category"));
+	            resultUd.setColorCss(rs.getString("color_css_number"));
+	        	}
+	        return resultUd;
+
+	        }catch(SQLException e){
+	            System.out.println(e.getMessage());
+	            throw new SQLException(e);
+	        }finally{
+	            if(con != null){
+	                con.close();
+	            }
+	        }
+	 }
 }

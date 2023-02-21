@@ -1,21 +1,14 @@
-<%@ page
-        import="javax.servlet.http.HttpSession"
-		import="jums.ProductMasterDTO"
-		import="java.util.ArrayList"
-        import="jums.ColorDataDTO"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@page
+	import="jums.UserProductListBeans"
+	import="java.util.*"
+	import="jums.*"
+%>
 <%
 	HttpSession hs = request.getSession();
-	ProductMasterDTO pmd = (ProductMasterDTO)hs.getAttribute("resultMaster");
-	ArrayList<ColorDataDTO> cdd = (ArrayList<ColorDataDTO>)hs.getAttribute("colorList");
-	ArrayList<Integer> colorIds = (ArrayList<Integer>)hs.getAttribute("colorNum");
-	ArrayList<Integer> colors = (ArrayList<Integer>)hs.getAttribute("singleColors");
-	ArrayList<String> sizes1 = (ArrayList<String>)hs.getAttribute("sizes1");
-	ArrayList<String> sizes2 = (ArrayList<String>)hs.getAttribute("sizes2");
-	ArrayList<String> sizes3 = (ArrayList<String>)hs.getAttribute("sizes3");
-	ArrayList<Integer> stocks1 = (ArrayList<Integer>)hs.getAttribute("stocks1");
-	ArrayList<Integer> stocks2 = (ArrayList<Integer>)hs.getAttribute("stocks2");
-	ArrayList<Integer> stocks3 = (ArrayList<Integer>)hs.getAttribute("stocks3");
+		ArrayList<UserProductListBeans> PdList = (ArrayList<UserProductListBeans>)request.getAttribute("UPLB");
+
 %>
 <!DOCTYPE html>
 <html>
@@ -25,33 +18,38 @@
 </head>
 <body>
 
-
+<%if(PdList != null) {%>
 	<% for(UserProductListBeans uplb:PdList){ %>
-	<div style="border: solid 1px black;">
-		<form action="User_ProductDetail?id=<%=uplb.getMasterId() %>" method="post"><input type="submit"></form>
-		<p><%=uplb.getMasterName() %></p>
 
-		<p><%=uplb.getListPrice() %></p>
+	<div style="border: solid 1px black; position: relative; width:30%; display:inline-block;">
+		<a href="User_ProductDetail?id=<%=uplb.getMasterId() %>" style="position: absolute; width:100%; height:100%;"></a>
+		<img src="img/<%=uplb.getMasterImg() %>" style="width:100px; height:100px;"><br>
 
-		<p><%=uplb.getMasterId() %></p>
+		<p>商品名<%=uplb.getMasterName() %></p>
 
-		<p><%=uplb.getMasterImg() %></p>
-
-		<p>
-		<% ArrayList<Integer> color = uplb.getpColor(); %>
-		<% for(int c:color){ %>
-			<%=c %>
-		<% } %>
-		</p>
-
-		<p>
+		<p>サイズ：
 		<% ArrayList<String> size = uplb.getSize(); %>
 		<% for(String s:size){ %>
 			<%=s %>
 		<%} %>
 		</p>
+
+		<p>カラー：
+		<%ArrayList<Integer> colorid = uplb.getpColor(); %>
+		<% for(int c:colorid){ %>
+		<% ColorDataDTO Color = ColorDataDAO.getInstance().UserViewColor(c); %>
+			<%=Color.getColorName() %>
+		<% } %>
+		</p>
+
+		<p>金額：<%=uplb.getListPrice() %></p>
+
 	</div>
+
 	<%} %>
+<%}else{ %>
+	該当の商品はありません
+<%} %>
 
 </body>
 </html>

@@ -116,9 +116,10 @@ public class ProductDataDAO {
 		            System.out.println(st);
 
 		            ResultSet rs = st.executeQuery();
+		            System.out.println(rs);
 		            ArrayList<ProductDataDTO> PdCSList = new ArrayList<ProductDataDTO>();
 
-		        if(rs.next()) {
+		        if(rs != null) {
 		            while(rs.next()) {
 		           	 //繰り返しinstanceを生成し続ける
 			        	ProductDataDTO resultUd = new ProductDataDTO();
@@ -128,15 +129,13 @@ public class ProductDataDAO {
 			        	resultUd.setPColor(rs.getInt("product_color_id"));
 			            resultUd.setSize(rs.getString("product_size"));
 
+			            System.out.print(resultUd.getSize());
 		                //resultUd(インスタンス1）に結果が入ったリストをセットする→インスタンス2以降も格納続ける
 		                PdCSList.add(resultUd);
 		            }
-			        return PdCSList;
 
-		        }else {
-		        	return PdCSList;
 		        }
-
+		       	return PdCSList;
 
 		        }catch(SQLException e){
 		            System.out.println(e.getMessage());
