@@ -45,7 +45,7 @@ public class Product_DeleteConfirm extends HttpServlet {
                 	ProductMasterDTO deleteChk = ProductMasterDAO.getInstance().deleteMaster(masterId);
                     resultMaster.setDeleteProduct(deleteChk.getDeleteProduct());
                     session.setAttribute("resultMaster", resultMaster);
-                	request.getRequestDispatcher("/productDetail.jsp").forward(request, response);
+                	request.getRequestDispatcher("/product_Detail.jsp").forward(request, response);
 
                 }else {
                 	request.getRequestDispatcher("/productDeleteConfirm.jsp").forward(request, response);

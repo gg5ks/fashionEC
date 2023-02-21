@@ -14,14 +14,14 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet implementation class Product_Detail
  */
-@WebServlet("/ProductDetail")
-public class ProductDetail extends HttpServlet {
+@WebServlet("/Product_Detail")
+public class Product_Detail extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductDetail() {
+    public Product_Detail() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -47,6 +47,7 @@ public class ProductDetail extends HttpServlet {
             ProductMasterDTO resultMaster = ProductMasterDAO.getInstance().searchProDetail(masterId);
             ArrayList<ProductDataDTO> resultProducts = ProductDataDAO.getInstance().proDetailInfo(masterId);
             session.setAttribute("resultMaster", resultMaster);
+            session.setAttribute("resultProducts", resultProducts);
 
             ArrayList<Integer> chkColors = new ArrayList<Integer>();
             for(int i=0; i<resultProducts.size(); i++) {

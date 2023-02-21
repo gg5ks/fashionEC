@@ -19,7 +19,6 @@ public class ColorDataDTO implements Serializable {
 		return colorId;
 	}
 
-
 	public void setColorName(String colorName) {
 		this.colorName = colorName;
 	}
