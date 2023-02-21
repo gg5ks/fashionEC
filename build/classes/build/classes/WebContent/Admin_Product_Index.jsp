@@ -114,7 +114,7 @@
 					<% for(int i=0; i<pmdList.size(); i++){ %>
 					<tr>
 						<td>
-						<a href = "ProductDetail?ac=<%= hs.getAttribute("ac")%>&mId=<%=pmdList.get(i).getMasterId()%>"><%=pmdList.get(i).getMasterId()%></a></td>
+						<a href = "Product_Detail?ac=<%= hs.getAttribute("ac")%>&mId=<%=pmdList.get(i).getMasterId()%>"><%=pmdList.get(i).getMasterId()%></a></td>
 						<td><%=pmdList.get(i).getMasterName() %></td>
 						<td><%=pmdList.get(i).getListPrice() %></td>
 						<td><% int colorPrint = pmdList.get(i).getPColor();
