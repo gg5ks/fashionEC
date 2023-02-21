@@ -88,4 +88,11 @@ public class User_ProductHelper {
 		return pr;
 	}
 
+	public ArrayList<Integer> AmountPullDown(int i) {
+		ArrayList<Integer> Amount = new ArrayList<Integer>();
+		for(int t=1; t<i; t++) {
+			Amount.add(t);
+		}
+		return Amount;
+	}
 }
