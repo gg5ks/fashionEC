@@ -7,10 +7,7 @@
 <%
 	HttpSession hs = request.getSession();
 	ArrayList<ColorDataDTO> cdd = (ArrayList<ColorDataDTO>)hs.getAttribute("colorList");
-	ArrayList<Integer> colorIds = (ArrayList<Integer>)hs.getAttribute("colorNum");
 	ArrayList<ProductMasterDTO> pmd = (ArrayList<ProductMasterDTO>)hs.getAttribute("masterList");
-	ArrayList<ProductMasterDTO> pmdList = (ArrayList<ProductMasterDTO>)hs.getAttribute("searchResult");
-	String checkSearch = request.getParameter("searching");
 
 %>
 
@@ -58,7 +55,7 @@
 							<tr>
 							<td>色</td>
 							<td><select name="searchColor">
-									<option value="0">-選択する--</option>
+									<option value="">-選択する--</option>
 									<% for(int i=0; i<cdd.size(); i++){ %>
 									<option value="<%=cdd.get(i).getColorId()%>"><%= cdd.get(i).getColorCate()%>_<%=cdd.get(i).getColorName()%></option>
 									<% } %>
@@ -78,64 +75,13 @@
 									<option value="MXL">MXL</option>
 								</select>
 							</td>
-							<td>ステータス</td>
-							<td><select name="searchPublish">
-									<option value="9">-選択する--</option>
-									<option value=0>非公開</option>
-									<option value=1>公開</option>
-								</select>
-							</td>
+
 							</tr>
 						</table>
 						<br><br>
 						<input type="hidden" name="ac"  value="<%= hs.getAttribute("ac")%>">
-						<input type="hidden" name="searching" value="yes">
 						<input type="submit" value="検索">
 					</form>
-					<br><br>
-
-					<% if (checkSearch!=null){ %>
-					<form action = "Product_Register" method = "POST">
-						<input type="hidden" name="ac"  value="<%= hs.getAttribute("ac")%>">
-						<input type="submit" value="追加">
-					</form>
-					<br><br>
-		          	<table border="1" style="border-collapse: collapse;text-align:center;">
-					<tr>
-						<td>商品シリーズID</td>
-						<td>商品シリーズ名</td>
-						<td>販売価格</td>
-						<td>カラー</td>
-						<td>サイズ</td>
-						<td>在庫数</td>
-						<td>公開状態</td>
-						<td>変更</td>
-					</tr>
-					<% for(int i=0; i<pmdList.size(); i++){ %>
-					<tr>
-						<td>
-						<a href = "ProductDetail?ac=<%= hs.getAttribute("ac")%>&mId=<%=pmdList.get(i).getMasterId()%>"><%=pmdList.get(i).getMasterId()%></a></td>
-						<td><%=pmdList.get(i).getMasterName() %></td>
-						<td><%=pmdList.get(i).getListPrice() %></td>
-						<td><% int colorPrint = pmdList.get(i).getPColor();
-								int colorIndex = colorIds.indexOf(colorPrint);
-								int colorCate = cdd.get(colorIndex).getColorCate();
-								String colorName = cdd.get(colorIndex).getColorName();
-							out.print(colorCate + "_" + colorName); %></td>
-						<td><%=pmdList.get(i).getSize() %></td>
-						<td><%=pmdList.get(i).getStock() %></td>
-						<td><% boolean checkP = pmdList.get(i).getPublish();
-								if (checkP){
-								out.print("公開");
-							}else {
-								out.print("非公開");
-							}%>
-						</td>
-						<td>変更</td>
-					</tr>
-					<% } %>
-					</table>
-					<% } %>
 		        </div>
 		    </div>
 		</div>

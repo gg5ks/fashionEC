@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page
-	import="jums.User_ProductDetailBeans"
+	import="jums.*"
 	import="java.util.*"
-	import="jums.ProductDataDTO"
 %>
 <%
 	HttpSession hs = request.getSession();
@@ -17,12 +16,12 @@
 </head>
 <body>
 	<div>
-	<h1>商品名<%=UPMD.getMasterName() %></h1>
+		<h1>商品名<%=UPMD.getMasterName() %></h1>
 
-	<% for(String img:UPMD.getImgList()){ %>
-	<p><img src="img/<%=img %>" style="width:100px; height:100px;"></p>
-	<% } %>
-	<p><%=UPMD.getMasterDiscript() %></p>
+		<% for(String img:UPMD.getImgList()){ %>
+			<p><img src="img/<%=img %>" style="width:100px; height:100px;"></p>
+		<% } %>
+		<p><%=UPMD.getMasterDiscript() %></p>
 	</div>
 
 	<form>
@@ -30,16 +29,17 @@
 		<div style="border:solid 1px black;">
 			<p>カラー:<%=UPMD.getColorIdList().get(i) %></p>
 			<p>サイズ</p>
-			<%for(int s=0; s< UPMD.getListSizeAmount().get(i).size(); s++){ %>
-				<p> <%= UPMD.getListSizeAmount().get(i).get(s).getSize() %> </p>
+			<%for(int s=0; s<UPMD.getListSizeAmount().get(i).size(); s++){ %>
+				<p><%= UPMD.getListSizeAmount().get(i).get(s).getSize() %></p>
 				<select>
-				<%for(int t=1; t<UPMD.getListSizeAmount().get(i).get(s).getStock(); t++) %>
+				<% ArrayList<Integer> amount = User_ProductHelper.getInstance().AmountPullDown(UPMD.getListSizeAmount().get(i).get(s).getStock()); %>
+				<%for(int t:amount){ %>
 					<option value=<%=t %>><%=t %></option>
 				<%} %>
 				</select>
 			<% } %>
 		</div>
-	<%} %>
+	<% } %>
 	</form>
 
 </body>

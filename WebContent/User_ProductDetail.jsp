@@ -24,7 +24,7 @@
 		<p><%=UPMD.getMasterDiscript() %></p>
 	</div>
 
-	<form>
+	<form action = "User_Cart" method = POST>
 	<%for(int i=0; i< UPMD.getColorIdList().size(); i++){ %>
 		<div style="border:solid 1px black;">
 			<p>カラー:<%=UPMD.getColorIdList().get(i) %></p>
@@ -37,6 +37,7 @@
 					<option value=<%=t %>><%=t %></option>
 				<%} %>
 				</select>
+				<input type="submit" class="btnSubmit" name="add" value="カートに入れる">
 			<% } %>
 		</div>
 	<% } %>
