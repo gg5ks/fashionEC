@@ -142,7 +142,7 @@
 
 			        </form>
 
-			        <form action="Admin_Product_Index" method="POST">
+			        <form action="Admin_Login" method="POST">
 			            <input type="submit" value="商品一覧へ">
 			        </form>
 				</div>

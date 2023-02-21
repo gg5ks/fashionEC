@@ -31,6 +31,8 @@ public class User_ProductDetail extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//System.out.print(request.getParameter("id"));
+
+
 		int PMID = Integer.parseInt(request.getParameter("id"));
 		try {
 			User_ProductDetailBeans UPDB = new User_ProductDetailBeans();
@@ -62,13 +64,13 @@ public class User_ProductDetail extends HttpServlet {
 
 			ArrayList<ProductDataDTO> PdList = ProductDataDAO.getInstance().proDetailInfo(PMID);
 			ArrayList<Integer> Color = User_ProductHelper.getInstance().ColorList(PdList);
-			ArrayList<ArrayList<ProductDataDTO>> SizeAmount = User_ProductHelper.getInstance().SAList(PdList, Color);
+			ArrayList<ArrayList<ProductDataDTO>> SizeAmountList = User_ProductHelper.getInstance().SAList(PdList, Color);
 
 			UPDB.setColorIdList(Color);
-			UPDB.setListSizeAmount(SizeAmount);
+			UPDB.setListSizeAmount(SizeAmountList);
 
 			request.setAttribute("UPDB", UPDB);
-			request.setAttribute("SizeAmount", SizeAmount);
+			request.setAttribute("SizeAmountList", SizeAmountList);
 			request.setAttribute("ImgList", ImgList);
 			request.getRequestDispatcher("/User_ProductDetail.jsp").forward(request, response);
 
