@@ -78,7 +78,6 @@ public class User_SearchResult extends HttpServlet {
 				UPLB.add(uplb);
 			}
 
-			System.out.print(UPLB.size());
 
 			request.setAttribute("UPLB", UPLB);
 
