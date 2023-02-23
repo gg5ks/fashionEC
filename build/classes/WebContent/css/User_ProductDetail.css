@@ -1,0 +1,19 @@
+@charset "UTF-8";
+.content{
+	display:none;
+}
+.content.active{
+	display:inline-block;
+
+}
+.tab{
+	display:inline-block;
+}
+
+.amount{
+	display:none;
+}
+
+.amount.active{
+	display:block;
+}
