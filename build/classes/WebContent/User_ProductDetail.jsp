@@ -6,7 +6,7 @@
 %>
 <%
 	HttpSession hs = request.getSession();
-	User_ProductDetailBeans UPMD = (User_ProductDetailBeans)request.getAttribute("UPDB");
+	User_ProductDetailBeans UPMD = (User_ProductDetailBeans)session.getAttribute("UPDB");
 %>
 <!DOCTYPE html>
 <html>
@@ -76,17 +76,19 @@ function sizeChange(sc){
 		<p><%=UPMD.getMasterDiscript() %></p>
 	</div>
 <!-- 選択用 -->
-	<form>
+	<form action="User_CartAdd" method="post">
 	<div>
 	<p>カラー</p>
 	<%for(int i=0; i< UPMD.getColorIdList().size(); i++){ %>
 			<%if(i == 0){%>
 			<div class="tab active" onClick="tabChange(this)">CID:<%=UPMD.getColorIdList().get(i) %></div>
+			<input type="hidden" name="colorid" value=<%=UPMD.getColorIdList().get(i) %>>
 			<% }else{ %>
 			<div class="tab" onClick="tabChange(this)">CID:<%=UPMD.getColorIdList().get(i) %></div>
+			<input type="hidden" name="colorid" value=<%=UPMD.getColorIdList().get(i) %>>
 			<% } %>
 
-
+			<!-- サイズと量のコンポーネント -->
 			<%if(i == 0){%>
 			<div class="content active" style="border:solid 1px black;">
 			<p>サイズ</p>
@@ -96,15 +98,17 @@ function sizeChange(sc){
 				<%if(s == 0){%>
 				<div class="size active" onClick="sizeChange(this)">
 					<p><%= UPMD.getListSizeAmount().get(i).get(s).getSize() %></p>
+					<input type="hidden" name="size" value=<%= UPMD.getListSizeAmount().get(i).get(s).getSize() %>>
 				</div>
 				<%}else{ %>
 				<div class="size" onClick="sizeChange(this)">
 					<p><%= UPMD.getListSizeAmount().get(i).get(s).getSize() %></p>
+					<input type="hidden" name="size" value=<%= UPMD.getListSizeAmount().get(i).get(s).getSize() %>>
 				</div>
 				<%} %>
 
 				<%if(s == 0){%>
-				<select class="amount active">
+				<select class="amount active" name="amount">
 				<% ArrayList<Integer> amount = User_ProductHelper.getInstance().AmountPullDown(UPMD.getListSizeAmount().get(i).get(s).getStock()); %>
 				<%for(int t:amount){ %>
 					<option value=<%=t %>><%=t %></option>
@@ -112,11 +116,11 @@ function sizeChange(sc){
 				</select>
 
 				<%}else{ %>
-				<select class="amount">
-				<% ArrayList<Integer> amount = User_ProductHelper.getInstance().AmountPullDown(UPMD.getListSizeAmount().get(i).get(s).getStock()); %>
-				<%for(int t:amount){ %>
-					<option value=<%=t %>><%=t %></option>
-				<%} %>
+				<select class="amount" name="amount">
+					<% ArrayList<Integer> amount = User_ProductHelper.getInstance().AmountPullDown(UPMD.getListSizeAmount().get(i).get(s).getStock()); %>
+					<%for(int t:amount){ %>
+						<option value=<%=t %>><%=t %></option>
+					<%} %>
 				</select>
 				<%} %>
 			<% } %>
@@ -127,20 +131,47 @@ function sizeChange(sc){
 			<p>サイズ</p>
 			<%for(int s=0; s<UPMD.getListSizeAmount().get(i).size(); s++){ %>
 
-				<p><%= UPMD.getListSizeAmount().get(i).get(s).getSize() %></p>
-				<select>
+				<%if(s == 0){%>
+				<div class="size active" onClick="sizeChange(this)">
+					<p><%= UPMD.getListSizeAmount().get(i).get(s).getSize() %></p>
+					<input type="hidden" name="size" value=<%= UPMD.getListSizeAmount().get(i).get(s).getSize() %>>
+				</div>
+				<%}else{ %>
+				<div class="size" onClick="sizeChange(this)">
+					<p><%= UPMD.getListSizeAmount().get(i).get(s).getSize() %></p>
+					<input type="hidden" name="size" value=<%= UPMD.getListSizeAmount().get(i).get(s).getSize() %>>
+				</div>
+				<%} %>
+
+				<%if(s == 0){%>
+				<select class="amount active" name="amount">
 				<% ArrayList<Integer> amount = User_ProductHelper.getInstance().AmountPullDown(UPMD.getListSizeAmount().get(i).get(s).getStock()); %>
 				<%for(int t:amount){ %>
 					<option value=<%=t %>><%=t %></option>
 				<%} %>
 				</select>
+
+				<%}else{ %>
+				<select class="amount" name="amount">
+				<% ArrayList<Integer> amount = User_ProductHelper.getInstance().AmountPullDown(UPMD.getListSizeAmount().get(i).get(s).getStock()); %>
+				<%for(int t:amount){ %>
+					<option value=<%=t %>><%=t %></option>
+				<%} %>
+				</select>
+				<%} %>
 			<% } %>
 			</div>
 			<%} %>
 
-
 	<% } %>
+	<%if(session.getAttribute("UserExist") != null){ %>
+	<input type="submit" value="カートに追加する">
+	<%}%>
 	</div>
 	</form>
-
+	<%if(session.getAttribute("UserExist") == null){ %>
+	<form>
+		<input type="submit" value="カートに追加するにはログインしてください">
+	</form>
+	<%} %>
 </body>

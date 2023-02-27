@@ -168,6 +168,37 @@ public class ProductDataDAO {
         }
     }
 
+        public int ProductIDSearch(int colorID,int MasterID,String size)throws SQLException {
+        	Connection con = null;
+            PreparedStatement st = null;
+
+            try{
+                con = DBManager.getConnection();
+                st = con.prepareStatement ("SELECT product_id FROM Products where product_master_id = ? AND product_color_id = ? AND product_size = ?");
+                st.setInt(1, MasterID);
+                st.setInt(2, colorID);
+                st.setString(3, size);
+
+                ResultSet rs = st.executeQuery();
+	            System.out.println(rs);
+
+                int productId =0;
+                while(rs.next()) {
+                	productId = rs.getInt(1);
+                }
+                System.out.println(productId);
+	            return productId;
+
+			}catch(SQLException e){
+	            System.out.println(e.getMessage());
+	            throw new SQLException(e);
+	        }finally{
+	            if(con != null){
+	                con.close();
+	            }
+	        }
+        }
+
 
 
 }

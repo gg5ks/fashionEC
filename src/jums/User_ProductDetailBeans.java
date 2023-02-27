@@ -7,6 +7,7 @@ import java.util.Set;
 
 public class User_ProductDetailBeans implements Serializable{
 	private int masterId;
+	private int product_id;
 	private String masterName;
 	private String masterDiscript;
 	private int price;
@@ -23,6 +24,12 @@ public class User_ProductDetailBeans implements Serializable{
 	}
 	public void setMasterId(int masterId) {
 		this.masterId = masterId;
+	}
+	public int getProduct_id() {
+		return product_id;
+	}
+	public void setProduct_id(int product_id) {
+		this.product_id = product_id;
 	}
 	public String getMasterName() {
 		return masterName;

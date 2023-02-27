@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class User_ProductDetail
@@ -31,7 +32,8 @@ public class User_ProductDetail extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//System.out.print(request.getParameter("id"));
-
+		request.setCharacterEncoding("UTF-8");
+		HttpSession session = request.getSession();
 
 		int PMID = Integer.parseInt(request.getParameter("id"));
 		try {
@@ -69,7 +71,7 @@ public class User_ProductDetail extends HttpServlet {
 			UPDB.setColorIdList(Color);
 			UPDB.setListSizeAmount(SizeAmountList);
 
-			request.setAttribute("UPDB", UPDB);
+			session.setAttribute("UPDB", UPDB);
 			request.setAttribute("SizeAmountList", SizeAmountList);
 			request.setAttribute("ImgList", ImgList);
 			request.getRequestDispatcher("/User_ProductDetail.jsp").forward(request, response);
